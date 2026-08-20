@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async (event) => {
+  console.log('📧 Approval function invoked');
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
@@ -9,8 +11,19 @@ exports.handler = async (event) => {
     const formData = JSON.parse(event.body);
     const { to_email, to_name, event_name, sport, registration_fee, submission_date } = formData;
 
+    console.log('📧 Sending approval email to:', to_email);
+
     if (!to_email || !to_name) {
+      console.error('❌ Missing required fields');
       return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields' }) };
+    }
+
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
+      console.error('❌ Missing GMAIL environment variables!');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Email configuration missing. Please set GMAIL_USER and GMAIL_PASS.' })
+      };
     }
 
     const transporter = nodemailer.createTransport({
@@ -19,7 +32,21 @@ exports.handler = async (event) => {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
+
+    try {
+      await transporter.verify();
+      console.log('✅ Transporter verified successfully');
+    } catch (verifyError) {
+      console.error('❌ Transporter verification failed:', verifyError.message);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Email authentication failed. Check GMAIL_USER and GMAIL_PASS.' })
+      };
+    }
 
     const mailOptions = {
       from: `"Sports Sponsorship" <${process.env.GMAIL_USER}>`,
@@ -153,17 +180,20 @@ exports.handler = async (event) => {
       `,
     };
 
+    console.log('📧 Sending approval email...');
     await transporter.sendMail(mailOptions);
+    console.log('✅ Approval email sent successfully');
 
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, message: 'Approval email sent successfully!' }),
     };
   } catch (error) {
-    console.error('Approval email error:', error);
+    console.error('❌ Approval email error:', error);
+    console.error('❌ Error stack:', error.stack);
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, error: 'Failed to send approval email.' }),
+      body: JSON.stringify({ success: false, error: error.message || 'Failed to send approval email.' }),
     };
   }
 };
