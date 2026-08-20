@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🏆 Sports Sponsorship Platform 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet" />
     <style>
+        /* ===== RESET & BASE ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#fff; line-height:1.7; min-height:100vh; overflow-x:hidden; }
         ::-webkit-scrollbar { width:8px; }
         ::-webkit-scrollbar-track { background:#0a0a1a; }
         ::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#FBBF24,#F59E0B); border-radius:10px; }
 
+        /* ===== ADMIN BUTTON ===== */
         .admin-btn {
             position:fixed; top:18px; right:18px; z-index:9999;
             background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.12);
@@ -36,6 +38,7 @@
         .admin-btn .gear-icon { display:inline-block; transition:transform 0.6s ease; }
         .admin-btn:hover .gear-icon { transform:rotate(90deg); }
 
+        /* ===== PASSCODE OVERLAY ===== */
         .passcode-overlay {
             position:fixed; inset:0; background:rgba(0,0,0,0.7);
             backdrop-filter:blur(8px); z-index:10000;
@@ -80,6 +83,7 @@
         .passcode-modal .btn-row .btn-cancel-code:hover { background:rgba(255,255,255,0.08); }
         .passcode-modal .error-msg { color:#ff4757; font-size:0.8rem; margin-top:10px; min-height:20px; }
 
+        /* ===== CALL POPUP ===== */
         .call-popup-overlay {
             position:fixed; inset:0; background:rgba(0,0,0,0.75);
             backdrop-filter:blur(12px); z-index:99999;
@@ -156,10 +160,12 @@
         .call-popup .call-phone-number { color:rgba(255,255,255,0.15); font-size:0.7rem; margin-top:12px; letter-spacing:1px; }
         .call-popup .call-phone-number strong { color:rgba(251,191,36,0.2); font-weight:400; }
 
+        /* ===== PAGES ===== */
         .page { display:none; padding:20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
         .page.active { display:block; animation:fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
+        /* ===== HERO ===== */
         .hero {
             position:relative; min-height:100vh; display:flex; align-items:center;
             justify-content:center; padding:60px 20px; overflow:hidden; background:#0a0a1a;
@@ -227,6 +233,7 @@
         .hero-stats .stat .number { font-size:2.6rem; font-weight:800; color:#FBBF24; display:block; }
         .hero-stats .stat .label { font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
 
+        /* ===== SPORT SECTION ===== */
         .sport-section {
             padding:70px 20px 50px; background:linear-gradient(180deg, rgba(10,10,26,0.95) 0%, rgba(18,16,42,0.9) 100%);
             text-align:center; border-top:1px solid rgba(255,215,0,0.04); position:relative;
@@ -267,6 +274,7 @@
         .sport-card .sport-count { font-size:0.65rem; color:rgba(255,255,255,0.25); margin-top:4px; }
         .sport-card.active-sport { border-color:#FBBF24; background:rgba(251,191,36,0.08); box-shadow:0 0 30px rgba(251,191,36,0.05); }
 
+        /* ===== CALENDAR ===== */
         .calendar-section {
             background:linear-gradient(135deg, rgba(10,10,26,0.95) 0%, rgba(26,16,64,0.9) 50%, rgba(10,10,26,0.95) 100%);
             padding:60px 20px 70px; border-top:1px solid rgba(255,215,0,0.04); position:relative;
@@ -316,6 +324,7 @@
         .calendar-item:hover .click-hint { display:block; }
         .no-events { color:rgba(255,255,255,0.3); text-align:center; padding:50px 0; font-size:1.1rem; }
 
+        /* ===== MODAL ===== */
         .modal-overlay {
             position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(12px);
             z-index:999; display:flex; align-items:center; justify-content:center;
@@ -368,6 +377,7 @@
         }
         .modal-card .btn-apply-modal:hover { transform:scale(1.02); box-shadow:0 8px 35px rgba(251,191,36,0.35); }
 
+        /* ===== APPLICATION FORM ===== */
         .apply-section {
             background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
             border-radius:28px; padding:36px 36px 40px; backdrop-filter:blur(6px);
@@ -394,22 +404,6 @@
         }
         .form-group input::placeholder { color:rgba(255,255,255,0.2); }
         .form-group select option { background:#1a1a2e; color:#fff; }
-        .file-input-wrapper {
-            position:relative; overflow:hidden; display:inline-block; width:100%;
-        }
-        .file-input-wrapper input[type="file"] {
-            position:absolute; left:0; top:0; opacity:0;
-            width:100%; height:100%; cursor:pointer;
-        }
-        .file-input-wrapper .file-label {
-            display:flex; align-items:center; gap:10px;
-            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
-            border-radius:12px; padding:14px 18px; color:rgba(255,255,255,0.5);
-            font-size:0.9rem; transition:all 0.3s ease; width:100%;
-        }
-        .file-input-wrapper .file-label:hover { border-color:rgba(251,191,36,0.3); background:rgba(255,255,255,0.06); }
-        .file-input-wrapper .file-label .file-icon { font-size:1.2rem; }
-        .file-input-wrapper .file-label .file-name { color:#fff; font-weight:500; margin-left:auto; font-size:0.8rem; }
         .btn-submit {
             grid-column:1/-1; padding:18px 40px;
             background:linear-gradient(135deg,#FBBF24,#F59E0B); border:none;
@@ -420,6 +414,7 @@
         .btn-submit:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(251,191,36,0.25); }
         .btn-submit:active { transform:scale(0.97); }
 
+        /* ===== CONFIRMATION ===== */
         .confirmation-card {
             background:rgba(255,255,255,0.04); border:1px solid rgba(46,213,115,0.15);
             border-radius:28px; padding:40px 40px 36px; backdrop-filter:blur(12px);
@@ -860,7 +855,6 @@
                             <div class="form-group"><label for="ageCategory">Age Category *</label><select id="ageCategory"><option value="">Select category</option><option value="Under 14">Under 14</option><option value="Under 16">Under 16</option><option value="Under 18">Under 18</option><option value="Under 24">Under 24</option><option value="Under 30">Under 30</option><option value="Open">Open</option><option value="Masters">Masters (30+)</option></select></div>
                         </div>
 
-                        <div class="form-group"><label for="passportPhoto">Passport Photo *</label><div class="file-input-wrapper"><input type="file" id="passportPhoto" accept="image/*" required /><div class="file-label"><span class="file-icon">📸</span><span>Upload passport photo</span><span class="file-name" id="passportFileName">No file chosen</span></div></div></div>
                         <div class="form-group"><label for="emergencyContact">Emergency Contact Name & Phone *</label><input type="text" id="emergencyContact" placeholder="e.g. John Doe - +254 712 345 678" required /></div>
                         <div class="form-group"><label for="sponsorshipAmount">Desired Sponsorship Amount (Ksh) *</label><input type="number" id="sponsorshipAmount" placeholder="e.g. 50000" min="1000" step="1000" required /></div>
                         <button type="submit" class="btn-submit">✔ Submit Application</button>
@@ -1522,14 +1516,14 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
         }
 
         // ============================================================
-        //  AUTO-NAVIGATION TIMER
+        //  AUTO-NAVIGATION TIMER (increased to 40 seconds)
         // ============================================================
         function startAutoNavTimer() {
             if (autoNavTimer) clearTimeout(autoNavTimer);
             autoNavTimer = setTimeout(() => {
                 goToPage('page2');
                 buildSelectionDropdowns();
-            }, 10000);
+            }, 40000); // 40 seconds
         }
 
         function resetAutoNavTimer() {
@@ -1786,14 +1780,6 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
         }
 
         // ============================================================
-        //  FILE UPLOAD LABEL
-        // ============================================================
-        document.getElementById('passportPhoto').addEventListener('change', function(e) {
-            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
-            document.getElementById('passportFileName').textContent = fileName;
-        });
-
-        // ============================================================
         //  PAYMENT OPTION SELECTION
         // ============================================================
         document.querySelectorAll('#paymentOptionsPage3 .payment-option-page3').forEach(option => {
@@ -1823,7 +1809,6 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
             const entryType = document.getElementById('entryType').value;
             const emergencyContact = document.getElementById('emergencyContact').value.trim();
             const sponsorshipAmount = document.getElementById('sponsorshipAmount').value;
-            const passportFile = document.getElementById('passportPhoto').files[0];
 
             let teamName = '';
             let teamMembers = 1;
@@ -1846,10 +1831,6 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
                 alert('Please fill in all required fields.');
                 return;
             }
-            if (!passportFile) {
-                alert('Please upload your passport photo.');
-                return;
-            }
 
             const sport = selectedEvent ? selectedEvent.sport : 'running';
             const feeData = getFeeData(sport, entryType, teamMembers);
@@ -1866,7 +1847,6 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
                 sport: sport,
                 eventDate: selectedEvent ? selectedEvent.date : 'N/A',
                 eventLocation: selectedEvent ? selectedEvent.location : 'N/A',
-                passportPhoto: passportFile.name,
                 paymentMethod: paymentMethod,
             };
 
@@ -1969,7 +1949,7 @@ ${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (a
             }
         });
 
-        console.log('🏆 Sports Sponsorship Platform 2026 — Full dynamic position options for all sports.');
+        console.log('🏆 Sports Sponsorship Platform 2026 — Passport photo section removed, auto-nav 40s.');
     </script>
 </body>
-</html>
+                </html>
