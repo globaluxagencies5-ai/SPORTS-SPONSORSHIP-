@@ -6,91 +6,49 @@
     <title>🏆 Sports Sponsorship Platform 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
     <style>
-        /* ===== RESET & BASE ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#fff; line-height:1.7; min-height:100vh; overflow-x:hidden; }
         ::-webkit-scrollbar { width:8px; }
         ::-webkit-scrollbar-track { background:#0a0a1a; }
         ::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#FBBF24,#F59E0B); border-radius:10px; }
 
-        /* ===== ADMIN BUTTON ===== */
         .admin-btn {
-            position:fixed;
-            top:18px;
-            right:18px;
-            z-index:9999;
-            background:rgba(251,191,36,0.06);
-            border:1px solid rgba(251,191,36,0.12);
-            border-radius:50%;
-            width:40px;
-            height:40px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:rgba(251,191,36,0.25);
-            font-size:18px;
-            cursor:pointer;
-            transition:all 0.4s ease;
-            text-decoration:none;
-            backdrop-filter:blur(4px);
-            box-shadow:0 0 20px rgba(251,191,36,0.02);
+            position:fixed; top:18px; right:18px; z-index:9999;
+            background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.12);
+            border-radius:50%; width:40px; height:40px;
+            display:flex; align-items:center; justify-content:center;
+            color:rgba(251,191,36,0.25); font-size:18px; cursor:pointer;
+            transition:all 0.4s ease; text-decoration:none;
+            backdrop-filter:blur(4px); box-shadow:0 0 20px rgba(251,191,36,0.02);
         }
         .admin-btn:hover {
-            background:rgba(251,191,36,0.1);
-            border-color:rgba(251,191,36,0.25);
-            color:rgba(251,191,36,0.6);
-            transform:rotate(90deg) scale(1.05);
-            box-shadow:0 0 40px rgba(251,191,36,0.06);
+            background:rgba(251,191,36,0.1); border-color:rgba(251,191,36,0.25);
+            color:rgba(251,191,36,0.6); transform:rotate(90deg) scale(1.05);
         }
         .admin-btn .tooltip {
-            position:absolute;
-            right:100%;
-            top:50%;
-            transform:translateY(-50%);
-            padding:4px 12px;
-            background:rgba(10,10,26,0.92);
-            border:1px solid rgba(251,191,36,0.08);
-            border-radius:6px;
-            font-size:0.6rem;
-            color:rgba(251,191,36,0.2);
-            white-space:nowrap;
-            opacity:0;
-            pointer-events:none;
-            transition:opacity 0.3s ease;
-            margin-right:10px;
-            letter-spacing:0.5px;
-            font-weight:500;
+            position:absolute; right:100%; top:50%; transform:translateY(-50%);
+            padding:4px 12px; background:rgba(10,10,26,0.92);
+            border:1px solid rgba(251,191,36,0.08); border-radius:6px;
+            font-size:0.6rem; color:rgba(251,191,36,0.2); white-space:nowrap;
+            opacity:0; pointer-events:none; transition:opacity 0.3s ease; margin-right:10px;
         }
         .admin-btn:hover .tooltip { opacity:1; }
         .admin-btn .gear-icon { display:inline-block; transition:transform 0.6s ease; }
         .admin-btn:hover .gear-icon { transform:rotate(90deg); }
 
-        /* ===== PASSCODE MODAL ===== */
         .passcode-overlay {
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,0.7);
-            backdrop-filter:blur(8px);
-            z-index:10000;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            opacity:0;
-            visibility:hidden;
-            transition:all 0.3s ease;
-            padding:20px;
+            position:fixed; inset:0; background:rgba(0,0,0,0.7);
+            backdrop-filter:blur(8px); z-index:10000;
+            display:flex; align-items:center; justify-content:center;
+            opacity:0; visibility:hidden; transition:all 0.3s ease; padding:20px;
         }
         .passcode-overlay.active { opacity:1; visibility:visible; }
         .passcode-modal {
             background:linear-gradient(145deg, #1a1a2e, #2a2a4a);
-            border:1px solid rgba(251,191,36,0.1);
-            border-radius:28px;
-            max-width:400px;
-            width:100%;
-            padding:36px 32px 32px;
+            border:1px solid rgba(251,191,36,0.1); border-radius:28px;
+            max-width:400px; width:100%; padding:36px 32px 32px;
             box-shadow:0 40px 80px rgba(0,0,0,0.6);
-            transform:scale(0.95) translateY(20px);
-            transition:all 0.3s ease;
+            transform:scale(0.95) translateY(20px); transition:all 0.3s ease;
             text-align:center;
         }
         .passcode-overlay.active .passcode-modal { transform:scale(1) translateY(0); }
@@ -99,253 +57,208 @@
         .passcode-modal p { color:rgba(255,255,255,0.4); font-size:0.9rem; margin-bottom:20px; }
         .passcode-modal .input-group { display:flex; flex-direction:column; gap:12px; }
         .passcode-modal input {
-            padding:14px 18px;
-            border-radius:12px;
-            border:1px solid rgba(255,255,255,0.08);
-            background:rgba(255,255,255,0.04);
-            color:#fff;
-            font-size:1rem;
-            font-family:'Inter',sans-serif;
-            outline:none;
-            transition:all 0.3s ease;
-            text-align:center;
-            letter-spacing:2px;
+            padding:14px 18px; border-radius:12px; border:1px solid rgba(255,255,255,0.08);
+            background:rgba(255,255,255,0.04); color:#fff; font-size:1rem;
+            font-family:'Inter',sans-serif; outline:none; transition:all 0.3s ease;
+            text-align:center; letter-spacing:2px;
         }
         .passcode-modal input:focus { border-color:#FBBF24; background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px rgba(251,191,36,0.05); }
         .passcode-modal .btn-row { display:flex; gap:12px; margin-top:8px; }
         .passcode-modal .btn-row button {
-            flex:1;
-            padding:12px;
-            border-radius:50px;
-            border:none;
-            font-weight:600;
-            font-size:0.95rem;
-            cursor:pointer;
-            transition:all 0.3s ease;
+            flex:1; padding:12px; border-radius:50px; border:none;
+            font-weight:600; font-size:0.95rem; cursor:pointer; transition:all 0.3s ease;
         }
         .passcode-modal .btn-row .btn-submit-code {
-            background:linear-gradient(135deg,#FBBF24,#F59E0B);
-            color:#0a0a1a;
+            background:linear-gradient(135deg,#FBBF24,#F59E0B); color:#0a0a1a;
             box-shadow:0 4px 20px rgba(251,191,36,0.15);
         }
         .passcode-modal .btn-row .btn-submit-code:hover { transform:scale(1.02); box-shadow:0 8px 30px rgba(251,191,36,0.25); }
         .passcode-modal .btn-row .btn-cancel-code {
-            background:rgba(255,255,255,0.05);
-            color:rgba(255,255,255,0.5);
+            background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.5);
             border:1px solid rgba(255,255,255,0.06);
         }
         .passcode-modal .btn-row .btn-cancel-code:hover { background:rgba(255,255,255,0.08); }
         .passcode-modal .error-msg { color:#ff4757; font-size:0.8rem; margin-top:10px; min-height:20px; }
 
-        /* ===== PAGE CONTAINERS ===== */
+        .call-popup-overlay {
+            position:fixed; inset:0; background:rgba(0,0,0,0.75);
+            backdrop-filter:blur(12px); z-index:99999;
+            display:flex; align-items:center; justify-content:center;
+            opacity:0; visibility:hidden; transition:all 0.5s ease; padding:20px;
+        }
+        .call-popup-overlay.active { opacity:1; visibility:visible; }
+        .call-popup {
+            background:linear-gradient(145deg, #1a1a2e, #2a2a4a);
+            border:1px solid rgba(251,191,36,0.15);
+            border-radius:32px;
+            max-width:500px; width:100%;
+            padding:40px 36px 36px;
+            box-shadow:0 50px 100px rgba(0,0,0,0.6);
+            transform:scale(0.9) translateY(30px);
+            transition:all 0.5s cubic-bezier(0.22,1,0.36,1);
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .call-popup::before {
+            content:'';
+            position:absolute; inset:0;
+            background:radial-gradient(circle at 50% 0%, rgba(251,191,36,0.05), transparent 70%);
+            pointer-events:none;
+        }
+        .call-popup-overlay.active .call-popup { transform:scale(1) translateY(0); }
+        .call-popup .agent-avatar {
+            width:100px; height:100px; border-radius:50%; margin:0 auto 16px;
+            background:linear-gradient(135deg, #2a2a4a, #1a1a2e);
+            border:3px solid rgba(251,191,36,0.15);
+            display:flex; align-items:center; justify-content:center;
+            font-size:3.5rem; position:relative;
+            box-shadow:0 8px 30px rgba(0,0,0,0.3);
+        }
+        .call-popup .agent-avatar .status-dot {
+            position:absolute; bottom:6px; right:6px; width:18px; height:18px;
+            background:#2ed573; border-radius:50%; border:3px solid #1a1a2e;
+            animation:pulse-dot 1.8s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform:scale(1); opacity:1; }
+            50% { transform:scale(1.3); opacity:0.6; }
+            100% { transform:scale(1); opacity:1; }
+        }
+        .call-popup .agent-name { font-family:'Playfair Display',serif; font-size:1.8rem; color:#FBBF24; font-weight:700; letter-spacing:0.5px; }
+        .call-popup .agent-title { color:rgba(255,255,255,0.3); font-size:0.75rem; text-transform:uppercase; letter-spacing:3px; margin-bottom:4px; }
+        .call-popup .popup-message { font-size:1rem; color:rgba(255,255,255,0.7); line-height:1.8; margin:12px 0 6px; font-weight:300; }
+        .call-popup .popup-message strong { color:#fff; font-weight:500; }
+        .call-popup .countdown-display { display:flex; align-items:center; justify-content:center; gap:16px; margin:20px 0 18px; }
+        .call-popup .countdown-number {
+            font-family:'Playfair Display',serif; font-size:4rem; font-weight:800; color:#FBBF24;
+            background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.1);
+            border-radius:16px; padding:4px 28px; min-width:100px; line-height:1.2;
+        }
+        .call-popup .countdown-label { font-size:0.8rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:2px; }
+        .call-popup .btn-call-now {
+            display:inline-flex; align-items:center; justify-content:center; gap:10px;
+            width:100%; padding:16px;
+            background:linear-gradient(135deg, #2ed573, #26de81);
+            border:none; border-radius:50px; font-weight:700; font-size:1.1rem;
+            color:#0a0a1a; cursor:pointer; transition:all 0.3s ease;
+            box-shadow:0 4px 30px rgba(46,213,115,0.2); text-decoration:none;
+        }
+        .call-popup .btn-call-now:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(46,213,115,0.35); }
+        .call-popup .btn-call-now .phone-icon { font-size:1.3rem; }
+        .call-popup .btn-skip {
+            background:none; border:none; color:rgba(255,255,255,0.2);
+            font-size:0.75rem; cursor:pointer; margin-top:14px;
+            transition:color 0.3s ease; font-family:'Inter',sans-serif;
+            text-decoration:underline; text-underline-offset:2px;
+        }
+        .call-popup .btn-skip:hover { color:rgba(255,255,255,0.4); }
+        .call-popup .call-phone-number { color:rgba(255,255,255,0.15); font-size:0.7rem; margin-top:12px; letter-spacing:1px; }
+        .call-popup .call-phone-number strong { color:rgba(251,191,36,0.2); font-weight:400; }
+
         .page { display:none; padding:20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
         .page.active { display:block; animation:fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
-        /* ===== HERO ===== */
         .hero {
-            position:relative;
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:60px 20px;
-            overflow:hidden;
-            background:#0a0a1a;
+            position:relative; min-height:100vh; display:flex; align-items:center;
+            justify-content:center; padding:60px 20px; overflow:hidden; background:#0a0a1a;
         }
         .hero-background {
-            position:absolute;
-            inset:-50px;
+            position:absolute; inset:-50px;
             background:radial-gradient(ellipse at 20% 50%, rgba(251,191,36,0.08) 0%, transparent 60%),
                        radial-gradient(ellipse at 80% 50%, rgba(59,130,246,0.06) 0%, transparent 60%),
                        url('https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
-            z-index:0;
-            animation:zoomBackground 25s infinite alternate ease-in-out;
+            z-index:0; animation:zoomBackground 25s infinite alternate ease-in-out;
             filter:brightness(0.6) saturate(1.2);
         }
         @keyframes zoomBackground { 0%{transform:scale(1);} 100%{transform:scale(1.08);} }
         .light-ray {
-            position:absolute;
-            border-radius:50%;
-            filter:blur(120px);
-            opacity:0.15;
-            animation:lightPulse 8s infinite alternate ease-in-out;
-            z-index:0;
+            position:absolute; border-radius:50%; filter:blur(120px); opacity:0.15;
+            animation:lightPulse 8s infinite alternate ease-in-out; z-index:0;
         }
         .light-ray-1 { width:600px; height:600px; top:-200px; right:-100px; background:radial-gradient(circle,rgba(251,191,36,0.3),transparent 70%); animation-delay:0s; }
         .light-ray-2 { width:500px; height:500px; bottom:-150px; left:-100px; background:radial-gradient(circle,rgba(99,102,241,0.2),transparent 70%); animation-delay:2s; }
         .light-ray-3 { width:400px; height:400px; top:30%; left:40%; background:radial-gradient(circle,rgba(236,72,153,0.15),transparent 70%); animation-delay:4s; }
         @keyframes lightPulse { 0%{opacity:0.05; transform:scale(0.8);} 100%{opacity:0.2; transform:scale(1.2);} }
         .watermark {
-            position:absolute;
-            top:50%; left:50%;
-            transform:translate(-50%,-50%) rotate(-6deg);
-            font-family:'Playfair Display',serif;
-            font-size:clamp(5rem,18vw,11rem);
-            font-weight:900;
-            color:rgba(255,255,255,0.025);
-            white-space:nowrap;
-            letter-spacing:0.2em;
-            pointer-events:none;
-            z-index:0;
-            user-select:none;
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-6deg);
+            font-family:'Playfair Display',serif; font-size:clamp(5rem,18vw,11rem);
+            font-weight:900; color:rgba(255,255,255,0.025); white-space:nowrap;
+            letter-spacing:0.2em; pointer-events:none; z-index:0; user-select:none;
         }
         .hero-content {
-            position:relative;
-            z-index:2;
-            text-align:center;
-            max-width:1050px;
-            backdrop-filter:blur(2px);
-            padding:30px;
-            border-radius:40px;
-            background:rgba(10,10,26,0.3);
-            border:1px solid rgba(255,255,255,0.03);
+            position:relative; z-index:2; text-align:center; max-width:1050px;
+            backdrop-filter:blur(2px); padding:30px; border-radius:40px;
+            background:rgba(10,10,26,0.3); border:1px solid rgba(255,255,255,0.03);
         }
         .hero-badge {
-            display:inline-block;
-            background:rgba(251,191,36,0.12);
-            color:#FBBF24;
-            padding:8px 28px;
-            border-radius:50px;
-            font-size:0.7rem;
-            font-weight:600;
-            letter-spacing:4px;
-            text-transform:uppercase;
-            margin-bottom:24px;
-            border:1px solid rgba(251,191,36,0.15);
-            backdrop-filter:blur(8px);
+            display:inline-block; background:rgba(251,191,36,0.12); color:#FBBF24;
+            padding:8px 28px; border-radius:50px; font-size:0.7rem; font-weight:600;
+            letter-spacing:4px; text-transform:uppercase; margin-bottom:24px;
+            border:1px solid rgba(251,191,36,0.15); backdrop-filter:blur(8px);
         }
         .hero h1 {
-            font-family:'Playfair Display',serif;
-            font-size:clamp(3rem,10vw,5.2rem);
-            font-weight:900;
-            margin-bottom:20px;
-            line-height:1.08;
+            font-family:'Playfair Display',serif; font-size:clamp(3rem,10vw,5.2rem);
+            font-weight:900; margin-bottom:20px; line-height:1.08;
             text-shadow:0 4px 40px rgba(0,0,0,0.4);
         }
         .hero h1 .highlight {
             background:linear-gradient(135deg,#FBBF24,#F59E0B,#FBBF24);
-            background-size:200% 200%;
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            background-clip:text;
+            background-size:200% 200%; -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent; background-clip:text;
             animation:shimmerGradient 4s ease-in-out infinite;
         }
         @keyframes shimmerGradient { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
         .hero p {
-            font-size:1.2rem;
-            color:rgba(255,255,255,0.8);
-            margin-bottom:40px;
-            line-height:1.9;
-            max-width:700px;
-            margin-left:auto;
-            margin-right:auto;
+            font-size:1.2rem; color:rgba(255,255,255,0.8); margin-bottom:40px;
+            line-height:1.9; max-width:700px; margin-left:auto; margin-right:auto;
             text-shadow:0 2px 20px rgba(0,0,0,0.3);
         }
         .hero-stats {
-            display:flex;
-            justify-content:center;
-            gap:30px;
-            margin:30px 0 48px;
-            flex-wrap:wrap;
+            display:flex; justify-content:center; gap:30px; margin:30px 0 48px; flex-wrap:wrap;
         }
         .hero-stats .stat {
-            text-align:center;
-            padding:18px 28px;
-            background:rgba(255,255,255,0.04);
-            border-radius:16px;
-            border:1px solid rgba(255,255,255,0.06);
-            backdrop-filter:blur(12px);
-            transition:all 0.4s ease;
-            min-width:130px;
+            text-align:center; padding:18px 28px; background:rgba(255,255,255,0.04);
+            border-radius:16px; border:1px solid rgba(255,255,255,0.06);
+            backdrop-filter:blur(12px); transition:all 0.4s ease; min-width:130px;
         }
         .hero-stats .stat:hover { background:rgba(255,255,255,0.08); border-color:rgba(251,191,36,0.2); transform:translateY(-4px); box-shadow:0 12px 30px rgba(0,0,0,0.3); }
         .hero-stats .stat .number { font-size:2.6rem; font-weight:800; color:#FBBF24; display:block; }
         .hero-stats .stat .label { font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
-        .cta-group { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
-        .cta-primary, .cta-secondary {
-            display:inline-flex;
-            align-items:center;
-            gap:10px;
-            padding:16px 40px;
-            border-radius:50px;
-            font-weight:700;
-            font-size:1rem;
-            cursor:pointer;
-            transition:all 0.3s ease;
-            text-decoration:none;
-            backdrop-filter:blur(8px);
-        }
-        .cta-primary {
-            background:linear-gradient(135deg,#FBBF24,#F59E0B);
-            color:#0a0a1a;
-            box-shadow:0 8px 40px rgba(251,191,36,0.25);
-        }
-        .cta-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 12px 50px rgba(251,191,36,0.35); }
-        .cta-secondary {
-            background:rgba(255,255,255,0.05);
-            color:#fff;
-            border:1.5px solid rgba(255,255,255,0.1);
-        }
-        .cta-secondary:hover { background:rgba(255,255,255,0.1); border-color:#FBBF24; transform:translateY(-3px); }
 
-        /* ===== SPORT SELECTION ===== */
         .sport-section {
-            padding:70px 20px 50px;
-            background:linear-gradient(180deg, rgba(10,10,26,0.95) 0%, rgba(18,16,42,0.9) 100%);
-            text-align:center;
-            border-top:1px solid rgba(255,215,0,0.04);
-            position:relative;
+            padding:70px 20px 50px; background:linear-gradient(180deg, rgba(10,10,26,0.95) 0%, rgba(18,16,42,0.9) 100%);
+            text-align:center; border-top:1px solid rgba(255,215,0,0.04); position:relative;
         }
         .sport-section::before {
-            content:'';
-            position:absolute;
-            top:0; left:0; right:0; bottom:0;
+            content:''; position:absolute; top:0; left:0; right:0; bottom:0;
             background:radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.03), transparent 70%);
             pointer-events:none;
         }
         .sport-section .section-tag {
-            display:inline-block;
-            background:linear-gradient(135deg,#FBBF24,#F59E0B);
-            color:#0a0a1a;
-            padding:6px 28px;
-            border-radius:50px;
-            font-size:0.7rem;
-            font-weight:700;
-            text-transform:uppercase;
-            letter-spacing:3px;
-            margin-bottom:12px;
+            display:inline-block; background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            color:#0a0a1a; padding:6px 28px; border-radius:50px; font-size:0.7rem;
+            font-weight:700; text-transform:uppercase; letter-spacing:3px; margin-bottom:12px;
         }
         .sport-section h2 { font-family:'Playfair Display',serif; font-size:2.8rem; margin-bottom:10px; }
         .sport-section h2 span { background:linear-gradient(135deg,#FBBF24,#F59E0B); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .sport-section .sub { color:rgba(255,255,255,0.4); font-size:1rem; max-width:600px; margin:0 auto 40px; }
 
         .sport-grid {
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-            gap:20px;
-            max-width:1100px;
-            margin:0 auto;
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+            gap:20px; max-width:1100px; margin:0 auto;
         }
         .sport-card {
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:20px;
-            padding:28px 12px 24px;
-            transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
-            cursor:pointer;
-            backdrop-filter:blur(8px);
-            text-align:center;
-            position:relative;
-            overflow:hidden;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:20px; padding:28px 12px 24px; transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
+            cursor:pointer; backdrop-filter:blur(8px); text-align:center;
+            position:relative; overflow:hidden;
         }
         .sport-card::before {
-            content:'';
-            position:absolute;
-            inset:0;
+            content:''; position:absolute; inset:0;
             background:radial-gradient(circle at 50% 50%, rgba(251,191,36,0.06), transparent 70%);
-            opacity:0;
-            transition:opacity 0.4s;
+            opacity:0; transition:opacity 0.4s;
         }
         .sport-card:hover { transform:translateY(-8px); border-color:rgba(251,191,36,0.25); background:rgba(255,255,255,0.06); box-shadow:0 20px 40px rgba(0,0,0,0.3); }
         .sport-card:hover::before { opacity:1; }
@@ -354,12 +267,9 @@
         .sport-card .sport-count { font-size:0.65rem; color:rgba(255,255,255,0.25); margin-top:4px; }
         .sport-card.active-sport { border-color:#FBBF24; background:rgba(251,191,36,0.08); box-shadow:0 0 30px rgba(251,191,36,0.05); }
 
-        /* ===== EVENTS CALENDAR ===== */
         .calendar-section {
             background:linear-gradient(135deg, rgba(10,10,26,0.95) 0%, rgba(26,16,64,0.9) 50%, rgba(10,10,26,0.95) 100%);
-            padding:60px 20px 70px;
-            border-top:1px solid rgba(255,215,0,0.04);
-            position:relative;
+            padding:60px 20px 70px; border-top:1px solid rgba(255,215,0,0.04); position:relative;
         }
         .calendar-section .content { max-width:1200px; margin:0 auto; }
         .calendar-section .top-bar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:30px; gap:16px; }
@@ -367,41 +277,27 @@
         .calendar-section .top-bar h2 span { background:linear-gradient(135deg,#FBBF24,#F59E0B); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .calendar-section .top-bar .filter-label { font-size:0.75rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px; }
         .calendar-section .top-bar .filter-label strong { color:#FBBF24; font-weight:600; }
+
         .calendar-grid {
-            display:grid;
-            grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-            gap:20px;
-            max-height:650px;
-            overflow-y:auto;
-            padding-right:8px;
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+            gap:20px; max-height:650px; overflow-y:auto; padding-right:8px;
         }
         .calendar-grid::-webkit-scrollbar { width:4px; }
         .calendar-grid::-webkit-scrollbar-track { background:rgba(255,255,255,0.02); border-radius:10px; }
         .calendar-grid::-webkit-scrollbar-thumb { background:#FBBF24; border-radius:10px; }
+
         .calendar-item {
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:16px;
-            padding:18px 20px 20px;
-            transition:all 0.3s ease;
-            backdrop-filter:blur(8px);
-            cursor:pointer;
-            position:relative;
-            overflow:hidden;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:16px; padding:18px 20px 20px; transition:all 0.3s ease;
+            backdrop-filter:blur(8px); cursor:pointer; position:relative; overflow:hidden;
         }
         .calendar-item::before {
-            content:'';
-            position:absolute;
-            top:0; left:0; right:0; height:3px;
-            background:linear-gradient(90deg,#FBBF24,#F59E0B);
-            opacity:0;
-            transition:opacity 0.4s;
+            content:''; position:absolute; top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg,#FBBF24,#F59E0B); opacity:0; transition:opacity 0.4s;
         }
         .calendar-item:hover {
-            background:rgba(255,255,255,0.06);
-            border-color:rgba(251,191,36,0.2);
-            transform:translateY(-4px);
-            box-shadow:0 12px 30px rgba(0,0,0,0.3);
+            background:rgba(255,255,255,0.06); border-color:rgba(251,191,36,0.2);
+            transform:translateY(-4px); box-shadow:0 12px 30px rgba(0,0,0,0.3);
         }
         .calendar-item:hover::before { opacity:1; }
         .calendar-item .cal-date { display:inline-block; background:rgba(251,191,36,0.1); color:#FBBF24; padding:2px 14px; border-radius:20px; font-size:0.7rem; font-weight:600; margin-bottom:6px; }
@@ -409,50 +305,33 @@
         .calendar-item .cal-location { font-size:0.75rem; color:rgba(255,255,255,0.4); display:flex; align-items:center; gap:6px; }
         .calendar-item .cal-location::before { content:'📍'; font-size:0.8rem; }
         .calendar-item .cal-organizer { display:inline-block; margin-top:5px; padding:2px 12px; border-radius:20px; font-size:0.6rem; font-weight:600; text-transform:uppercase; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.04); }
+        .calendar-item .cal-prize {
+            display:inline-block; margin-top:4px; padding:2px 12px; border-radius:20px;
+            font-size:0.65rem; font-weight:700; background:rgba(251,191,36,0.08);
+            color:#FBBF24; border:1px solid rgba(251,191,36,0.06);
+        }
+        .calendar-item .cal-prize .prize-amount { color:#fff; font-weight:600; }
         .calendar-item .cal-desc { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4; }
         .calendar-item .click-hint { display:none; margin-top:6px; font-size:0.55rem; color:rgba(255,255,255,0.15); }
         .calendar-item:hover .click-hint { display:block; }
         .no-events { color:rgba(255,255,255,0.3); text-align:center; padding:50px 0; font-size:1.1rem; }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
-            position:fixed;
-            inset:0;
-            background:rgba(0,0,0,0.8);
-            backdrop-filter:blur(12px);
-            z-index:999;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            opacity:0;
-            visibility:hidden;
-            transition:all 0.3s ease;
-            padding:20px;
+            position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(12px);
+            z-index:999; display:flex; align-items:center; justify-content:center;
+            opacity:0; visibility:hidden; transition:all 0.3s ease; padding:20px;
         }
         .modal-overlay.active { opacity:1; visibility:visible; }
         .modal-card {
-            background:linear-gradient(145deg, #1a1a2e, #2a2a4a);
-            border:1px solid rgba(255,215,0,0.12);
-            border-radius:32px;
-            max-width:540px;
-            width:100%;
-            padding:36px 32px 32px;
-            box-shadow:0 40px 80px rgba(0,0,0,0.6);
-            transform:scale(0.95) translateY(20px);
-            transition:all 0.3s ease;
-            max-height:92vh;
-            overflow-y:auto;
-            position:relative;
+            background:linear-gradient(145deg, #1a1a2e, #2a2a4a); border:1px solid rgba(255,215,0,0.12);
+            border-radius:32px; max-width:600px; width:100%; padding:36px 32px 32px;
+            box-shadow:0 40px 80px rgba(0,0,0,0.6); transform:scale(0.95) translateY(20px);
+            transition:all 0.3s ease; max-height:92vh; overflow-y:auto; position:relative;
         }
         .modal-overlay.active .modal-card { transform:scale(1) translateY(0); }
         .modal-card .close-modal {
-            position:absolute;
-            top:16px; right:20px;
-            background:none; border:none;
-            color:rgba(255,255,255,0.3);
-            font-size:1.8rem;
-            cursor:pointer;
-            transition:color 0.3s;
+            position:absolute; top:16px; right:20px; background:none; border:none;
+            color:rgba(255,255,255,0.3); font-size:1.8rem; cursor:pointer; transition:color 0.3s;
         }
         .modal-card .close-modal:hover { color:#FBBF24; }
         .modal-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:#FBBF24; margin-bottom:4px; }
@@ -463,6 +342,16 @@
         .modal-card .modal-description { background:rgba(255,255,255,0.03); border-radius:12px; padding:14px 16px; margin:8px 0 12px; border-left:3px solid rgba(251,191,36,0.4); }
         .modal-card .modal-description h4 { color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
         .modal-card .modal-description p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; }
+        .modal-card .modal-prize {
+            background:rgba(251,191,36,0.05); border-radius:12px; padding:14px 16px;
+            margin:8px 0 12px; border-left:3px solid #FBBF24;
+        }
+        .modal-card .modal-prize h4 { color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .modal-card .modal-prize .prize-list { list-style:none; padding:0; margin:4px 0; }
+        .modal-card .modal-prize .prize-list li { padding:2px 0; font-size:0.85rem; color:rgba(255,255,255,0.7); display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.03); }
+        .modal-card .modal-prize .prize-list li:last-child { border-bottom:none; }
+        .modal-card .modal-prize .prize-list li .pos { color:#FBBF24; font-weight:600; }
+        .modal-card .modal-prize .prize-list li .amount { color:#fff; font-weight:500; }
         .modal-card .modal-sponsorship { background:rgba(251,191,36,0.05); border-radius:12px; padding:14px 16px; margin:8px 0 12px; border-left:3px solid #FBBF24; }
         .modal-card .modal-sponsorship h4 { color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
         .modal-card .modal-sponsorship p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; }
@@ -472,166 +361,93 @@
         .modal-card .modal-requirements ul li { padding:3px 0; padding-left:20px; position:relative; }
         .modal-card .modal-requirements ul li::before { content:'▹'; position:absolute; left:0; color:#FBBF24; }
         .modal-card .btn-apply-modal {
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:8px;
-            width:100%;
-            padding:15px;
-            background:linear-gradient(135deg,#FBBF24,#F59E0B);
-            border:none;
-            border-radius:50px;
-            font-weight:700;
-            font-size:1.05rem;
-            color:#0a0a1a;
-            cursor:pointer;
-            transition:all 0.3s;
-            box-shadow:0 4px 20px rgba(251,191,36,0.2);
+            display:inline-flex; align-items:center; justify-content:center; gap:8px;
+            width:100%; padding:15px; background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            border:none; border-radius:50px; font-weight:700; font-size:1.05rem;
+            color:#0a0a1a; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 20px rgba(251,191,36,0.2);
         }
         .modal-card .btn-apply-modal:hover { transform:scale(1.02); box-shadow:0 8px 35px rgba(251,191,36,0.35); }
 
-        /* ===== APPLICATION FORM (Page 2) ===== */
         .apply-section {
-            background:rgba(255,255,255,0.02);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:28px;
-            padding:36px 36px 40px;
-            backdrop-filter:blur(6px);
-            margin-top:30px;
-            box-shadow:0 20px 40px rgba(0,0,0,0.2);
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+            border-radius:28px; padding:36px 36px 40px; backdrop-filter:blur(6px);
+            margin-top:30px; box-shadow:0 20px 40px rgba(0,0,0,0.2);
         }
         .apply-section h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; margin-bottom:6px; }
         .apply-section h2 span { color:#FBBF24; }
         .apply-section .form-sub { color:rgba(255,255,255,0.4); margin-bottom:28px; font-size:0.95rem; }
         .form-grid {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:20px 28px;
+            display:grid; grid-template-columns:1fr 1fr; gap:20px 28px;
         }
         .form-group { display:flex; flex-direction:column; gap:4px; }
         .form-group.full { grid-column:1/-1; }
         .form-group label { font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); }
         .form-group input, .form-group select {
-            background:rgba(255,255,255,0.04);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:12px;
-            padding:14px 18px;
-            color:#fff;
-            font-family:'Inter',sans-serif;
-            font-size:0.95rem;
-            transition:all 0.3s ease;
-            outline:none;
-            width:100%;
+            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px; padding:14px 18px; color:#fff;
+            font-family:'Inter',sans-serif; font-size:0.95rem; transition:all 0.3s ease;
+            outline:none; width:100%;
         }
         .form-group input:focus, .form-group select:focus {
-            border-color:#FBBF24;
-            background:rgba(255,255,255,0.06);
+            border-color:#FBBF24; background:rgba(255,255,255,0.06);
             box-shadow:0 0 0 3px rgba(251,191,36,0.05);
         }
         .form-group input::placeholder { color:rgba(255,255,255,0.2); }
         .form-group select option { background:#1a1a2e; color:#fff; }
         .file-input-wrapper {
-            position:relative;
-            overflow:hidden;
-            display:inline-block;
-            width:100%;
+            position:relative; overflow:hidden; display:inline-block; width:100%;
         }
         .file-input-wrapper input[type="file"] {
-            position:absolute;
-            left:0; top:0;
-            opacity:0;
-            width:100%;
-            height:100%;
-            cursor:pointer;
+            position:absolute; left:0; top:0; opacity:0;
+            width:100%; height:100%; cursor:pointer;
         }
         .file-input-wrapper .file-label {
-            display:flex;
-            align-items:center;
-            gap:10px;
-            background:rgba(255,255,255,0.04);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:12px;
-            padding:14px 18px;
-            color:rgba(255,255,255,0.5);
-            font-size:0.9rem;
-            transition:all 0.3s ease;
-            width:100%;
+            display:flex; align-items:center; gap:10px;
+            background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px; padding:14px 18px; color:rgba(255,255,255,0.5);
+            font-size:0.9rem; transition:all 0.3s ease; width:100%;
         }
         .file-input-wrapper .file-label:hover { border-color:rgba(251,191,36,0.3); background:rgba(255,255,255,0.06); }
         .file-input-wrapper .file-label .file-icon { font-size:1.2rem; }
         .file-input-wrapper .file-label .file-name { color:#fff; font-weight:500; margin-left:auto; font-size:0.8rem; }
         .btn-submit {
-            grid-column:1/-1;
-            padding:18px 40px;
-            background:linear-gradient(135deg,#FBBF24,#F59E0B);
-            border:none;
-            border-radius:50px;
-            font-weight:700;
-            font-size:1.1rem;
-            color:#0a0a1a;
-            cursor:pointer;
-            transition:all 0.3s ease;
-            box-shadow:0 4px 25px rgba(251,191,36,0.15);
-            margin-top:8px;
-            width:100%;
-            max-width:400px;
-            justify-self:center;
+            grid-column:1/-1; padding:18px 40px;
+            background:linear-gradient(135deg,#FBBF24,#F59E0B); border:none;
+            border-radius:50px; font-weight:700; font-size:1.1rem; color:#0a0a1a;
+            cursor:pointer; transition:all 0.3s ease; box-shadow:0 4px 25px rgba(251,191,36,0.15);
+            margin-top:8px; width:100%; max-width:400px; justify-self:center;
         }
         .btn-submit:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(251,191,36,0.25); }
         .btn-submit:active { transform:scale(0.97); }
 
-        /* ===== CONFIRMATION (Page 3) ===== */
         .confirmation-card {
-            background:rgba(255,255,255,0.04);
-            border:1px solid rgba(46,213,115,0.15);
-            border-radius:28px;
-            padding:40px 40px 36px;
-            backdrop-filter:blur(12px);
-            box-shadow:0 20px 60px rgba(0,0,0,0.4);
-            text-align:center;
-            margin-bottom:32px;
+            background:rgba(255,255,255,0.04); border:1px solid rgba(46,213,115,0.15);
+            border-radius:28px; padding:40px 40px 36px; backdrop-filter:blur(12px);
+            box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; margin-bottom:32px;
         }
         .confirmation-card .checkmark { font-size:4rem; display:block; margin-bottom:12px; }
         .confirmation-card h2 { font-family:'Playfair Display',serif; font-size:2.2rem; color:#2ed573; margin-bottom:8px; }
         .confirmation-card p { color:rgba(255,255,255,0.6); font-size:1rem; max-width:500px; margin:0 auto; }
 
         .payment-section-page3 {
-            background:rgba(255,215,0,0.04);
-            border:1px solid rgba(255,215,0,0.1);
-            border-radius:24px;
-            padding:32px 36px 36px;
-            backdrop-filter:blur(8px);
+            background:rgba(255,215,0,0.04); border:1px solid rgba(255,215,0,0.1);
+            border-radius:24px; padding:32px 36px 36px; backdrop-filter:blur(8px);
             margin-bottom:32px;
         }
         .payment-section-page3 .payment-header {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-            gap:16px;
-            margin-bottom:20px;
+            display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;
         }
         .payment-section-page3 .payment-header h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:#FBBF24; }
         .payment-section-page3 .payment-header .total-fee {
-            font-size:2rem;
-            font-weight:800;
-            color:#fff;
-            background:rgba(251,191,36,0.1);
-            padding:6px 28px;
-            border-radius:50px;
+            font-size:2rem; font-weight:800; color:#fff;
+            background:rgba(251,191,36,0.1); padding:6px 28px; border-radius:50px;
             border:1px solid rgba(251,191,36,0.15);
         }
         .payment-details-page3 {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:16px 32px;
-            margin-bottom:20px;
+            display:grid; grid-template-columns:1fr 1fr; gap:16px 32px; margin-bottom:20px;
         }
         .payment-details-page3 .pay-item {
-            display:flex;
-            flex-direction:column;
-            gap:2px;
-            padding:8px 0;
+            display:flex; flex-direction:column; gap:2px; padding:8px 0;
             border-bottom:1px solid rgba(255,255,255,0.04);
         }
         .payment-details-page3 .pay-item .label { font-size:0.6rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.3); }
@@ -639,21 +455,13 @@
         .payment-details-page3 .pay-item.full { grid-column:1/-1; }
 
         .payment-options-page3 {
-            display:grid;
-            grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-            gap:12px;
-            margin:16px 0 20px;
+            display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+            gap:12px; margin:16px 0 20px;
         }
         .payment-option-page3 {
-            display:flex;
-            align-items:center;
-            gap:12px;
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:14px;
-            padding:14px 18px;
-            cursor:pointer;
-            transition:all 0.3s ease;
+            display:flex; align-items:center; gap:12px;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:14px; padding:14px 18px; cursor:pointer; transition:all 0.3s ease;
         }
         .payment-option-page3:hover { background:rgba(255,255,255,0.06); border-color:rgba(251,191,36,0.2); }
         .payment-option-page3.selected { border-color:#FBBF24; background:rgba(251,191,36,0.06); box-shadow:0 0 20px rgba(251,191,36,0.05); }
@@ -663,11 +471,8 @@
         .payment-option-page3.disabled { opacity:0.5; cursor:default; }
 
         .payment-instructions-box {
-            background:rgba(255,255,255,0.03);
-            border-radius:16px;
-            padding:20px 24px;
-            border-left:3px solid #FBBF24;
-            margin:20px 0;
+            background:rgba(255,255,255,0.03); border-radius:16px; padding:20px 24px;
+            border-left:3px solid #FBBF24; margin:20px 0;
         }
         .payment-instructions-box h4 { color:#FBBF24; font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
         .payment-instructions-box .pay-method { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
@@ -678,40 +483,83 @@
         .payment-instructions-box .pay-method .pay-info .pay-detail strong { color:#FBBF24; }
 
         .payment-note {
-            margin-top:16px;
-            padding:16px 20px;
-            background:rgba(46,213,115,0.04);
-            border-radius:14px;
-            border:1px solid rgba(46,213,115,0.08);
-            display:flex;
-            align-items:flex-start;
-            gap:14px;
+            margin-top:16px; padding:16px 20px; background:rgba(46,213,115,0.04);
+            border-radius:14px; border:1px solid rgba(46,213,115,0.08);
+            display:flex; align-items:flex-start; gap:14px;
         }
         .payment-note .note-icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
         .payment-note .note-content { font-size:0.9rem; color:rgba(255,255,255,0.6); line-height:1.7; }
         .payment-note .note-content strong { color:#FBBF24; }
         .payment-note .note-content .highlight-text { color:#2ed573; font-weight:500; }
 
-        .summary-section-page3 {
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,255,255,0.06);
+        .customer-care-section {
+            background:rgba(255,215,0,0.03);
+            border:1px solid rgba(255,215,0,0.08);
             border-radius:24px;
-            padding:32px 36px 36px;
+            padding:28px 32px 32px;
+            margin-bottom:32px;
             backdrop-filter:blur(8px);
+            display:flex;
+            align-items:center;
+            gap:28px;
+            flex-wrap:wrap;
+            position:relative;
+            overflow:hidden;
+            transition:all 0.3s ease;
+        }
+        .customer-care-section::before {
+            content:'';
+            position:absolute; inset:0;
+            background:radial-gradient(circle at 70% 50%, rgba(251,191,36,0.03), transparent 70%);
+            pointer-events:none;
+        }
+        .customer-care-section .agent-image {
+            width:120px; height:120px; border-radius:50%; flex-shrink:0;
+            border:3px solid rgba(251,191,36,0.15);
+            box-shadow:0 8px 30px rgba(0,0,0,0.3);
+            transition:all 0.3s ease;
+            background:linear-gradient(135deg, #1a1a2e, #2a2a4a);
+            display:flex; align-items:center; justify-content:center;
+            font-size:3.5rem; position:relative;
+        }
+        .customer-care-section .agent-image .status-dot {
+            position:absolute; bottom:8px; right:8px; width:16px; height:16px;
+            background:#2ed573; border-radius:50%; border:2px solid #0a0a1a;
+            animation:pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform:scale(1); opacity:1; }
+            50% { transform:scale(1.3); opacity:0.7; }
+            100% { transform:scale(1); opacity:1; }
+        }
+        .customer-care-section:hover .agent-image { border-color:rgba(251,191,36,0.35); transform:scale(1.02); }
+        .customer-care-section .agent-info { flex:1; min-width:200px; }
+        .customer-care-section .agent-info .agent-name { font-family:'Playfair Display',serif; font-size:1.5rem; color:#FBBF24; font-weight:700; }
+        .customer-care-section .agent-info .agent-title { color:rgba(255,255,255,0.4); font-size:0.8rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:2px; }
+        .customer-care-section .agent-info .agent-bio { color:rgba(255,255,255,0.6); font-size:0.9rem; line-height:1.6; margin-top:4px; }
+        .customer-care-section .call-actions { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+        .btn-call {
+            display:inline-flex; align-items:center; gap:10px;
+            padding:14px 32px; background:linear-gradient(135deg, #2ed573, #26de81);
+            border:none; border-radius:50px; font-weight:700; font-size:1rem;
+            color:#0a0a1a; cursor:pointer; transition:all 0.3s ease;
+            box-shadow:0 4px 25px rgba(46,213,115,0.15); text-decoration:none;
+        }
+        .btn-call:hover { transform:scale(1.04); box-shadow:0 8px 40px rgba(46,213,115,0.25); }
+        .btn-call .phone-icon { font-size:1.2rem; }
+
+        .summary-section-page3 {
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:24px; padding:32px 36px 36px; backdrop-filter:blur(8px);
             margin-bottom:32px;
         }
         .summary-section-page3 h3 { font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:20px; }
         .summary-section-page3 h3 span { color:#FBBF24; }
         .summary-grid-page3 {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:16px 32px;
+            display:grid; grid-template-columns:1fr 1fr; gap:16px 32px;
         }
         .summary-item-page3 {
-            display:flex;
-            flex-direction:column;
-            gap:2px;
-            padding:8px 0;
+            display:flex; flex-direction:column; gap:2px; padding:8px 0;
             border-bottom:1px solid rgba(255,255,255,0.04);
         }
         .summary-item-page3 .label { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.3); }
@@ -719,12 +567,8 @@
         .summary-item-page3.full { grid-column:1/-1; }
 
         .next-steps-page3 {
-            background:rgba(255,215,0,0.03);
-            border:1px solid rgba(255,215,0,0.08);
-            border-radius:20px;
-            padding:28px 32px;
-            margin-bottom:32px;
-            backdrop-filter:blur(4px);
+            background:rgba(255,215,0,0.03); border:1px solid rgba(255,215,0,0.08);
+            border-radius:20px; padding:28px 32px; margin-bottom:32px; backdrop-filter:blur(4px);
         }
         .next-steps-page3 h4 { color:#FBBF24; font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px; }
         .next-steps-page3 ul { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; }
@@ -736,162 +580,80 @@
         .btn-primary:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(251,191,36,0.25); }
         .btn-secondary { display:inline-flex; align-items:center; gap:10px; padding:16px 40px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:50px; font-weight:600; font-size:1rem; color:#fff; cursor:pointer; transition:all 0.3s ease; text-decoration:none; }
         .btn-secondary:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,215,0,0.2); }
-        .btn-success { display:inline-flex; align-items:center; gap:10px; padding:16px 40px; background:linear-gradient(135deg,#2ed573,#26de81); border:none; border-radius:50px; font-weight:700; font-size:1rem; color:#0a0a1a; cursor:pointer; transition:all 0.3s ease; text-decoration:none; box-shadow:0 4px 25px rgba(46,213,115,0.15); }
-        .btn-success:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(46,213,115,0.25); }
 
         .back-link { display:inline-flex; align-items:center; gap:8px; color:rgba(255,255,255,0.3); text-decoration:none; font-size:0.85rem; transition:color 0.3s; margin-bottom:20px; }
         .back-link:hover { color:#FBBF24; }
 
-        /* ===== SELECTION DROPDOWNS ON PAGE 2 ===== */
         .selector-group { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:30px; }
         .selector-group .selector-item { flex:1; min-width:200px; }
         .selector-group .selector-item label { font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); display:block; margin-bottom:4px; }
         .selector-group .selector-item select {
-            width:100%;
-            padding:12px 16px;
-            background:rgba(255,255,255,0.04);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:12px;
-            color:#fff;
-            font-family:'Inter',sans-serif;
-            font-size:0.95rem;
-            outline:none;
-            transition:all 0.3s ease;
+            width:100%; padding:12px 16px; background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08); border-radius:12px; color:#fff;
+            font-family:'Inter',sans-serif; font-size:0.95rem; outline:none; transition:all 0.3s ease;
         }
         .selector-group .selector-item select:focus { border-color:#FBBF24; background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px rgba(251,191,36,0.05); }
         .selector-group .selector-item select option { background:#1a1a2e; color:#fff; }
 
-        /* ===== ADMIN DASHBOARD (Page 4) ===== */
-        .admin-dashboard {
-            max-width:1200px;
-            margin:0 auto;
-            padding:20px;
-        }
-        .admin-dashboard .header {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:30px;
-            flex-wrap:wrap;
-            gap:16px;
-        }
-        .admin-dashboard .header h1 {
-            font-family:'Playfair Display',serif;
-            font-size:2.2rem;
-            color:#FBBF24;
-        }
-        .admin-dashboard .header .stats {
-            display:flex;
-            gap:20px;
-        }
+        .admin-dashboard { max-width:1200px; margin:0 auto; padding:20px; }
+        .admin-dashboard .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:16px; }
+        .admin-dashboard .header h1 { font-family:'Playfair Display',serif; font-size:2.2rem; color:#FBBF24; }
+        .admin-dashboard .header .stats { display:flex; gap:20px; }
         .admin-dashboard .header .stats .stat-box {
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:12px;
-            padding:12px 24px;
-            text-align:center;
-            min-width:100px;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:12px; padding:12px 24px; text-align:center; min-width:100px;
         }
-        .admin-dashboard .header .stats .stat-box .num {
-            font-size:1.8rem;
-            font-weight:800;
-            color:#FBBF24;
-        }
-        .admin-dashboard .header .stats .stat-box .lbl {
-            font-size:0.6rem;
-            text-transform:uppercase;
-            letter-spacing:1px;
-            color:rgba(255,255,255,0.3);
-        }
+        .admin-dashboard .header .stats .stat-box .num { font-size:1.8rem; font-weight:800; color:#FBBF24; }
+        .admin-dashboard .header .stats .stat-box .lbl { font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.3); }
         .admin-table-wrap {
-            background:rgba(255,255,255,0.02);
-            border:1px solid rgba(255,255,255,0.06);
-            border-radius:20px;
-            overflow:hidden;
-            backdrop-filter:blur(6px);
-            overflow-x:auto;
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+            border-radius:20px; overflow:hidden; backdrop-filter:blur(6px); overflow-x:auto;
         }
         .admin-table {
-            width:100%;
-            border-collapse:collapse;
-            font-size:0.85rem;
-            min-width:900px;
+            width:100%; border-collapse:collapse; font-size:0.85rem; min-width:900px;
         }
         .admin-table th {
-            background:rgba(251,191,36,0.04);
-            color:rgba(255,255,255,0.5);
-            font-weight:600;
-            text-transform:uppercase;
-            font-size:0.65rem;
-            letter-spacing:1px;
-            padding:14px 18px;
-            text-align:left;
+            background:rgba(251,191,36,0.04); color:rgba(255,255,255,0.5);
+            font-weight:600; text-transform:uppercase; font-size:0.65rem;
+            letter-spacing:1px; padding:14px 18px; text-align:left;
             border-bottom:1px solid rgba(255,255,255,0.04);
         }
-        .admin-table td {
-            padding:12px 18px;
-            border-bottom:1px solid rgba(255,255,255,0.03);
-            color:rgba(255,255,255,0.8);
-            vertical-align:middle;
-        }
+        .admin-table td { padding:12px 18px; border-bottom:1px solid rgba(255,255,255,0.03); color:rgba(255,255,255,0.8); vertical-align:middle; }
         .admin-table tr:hover td { background:rgba(255,255,255,0.02); }
         .admin-table .status {
-            display:inline-block;
-            padding:2px 12px;
-            border-radius:20px;
-            font-size:0.6rem;
-            font-weight:600;
-            text-transform:uppercase;
-            letter-spacing:0.5px;
+            display:inline-block; padding:2px 12px; border-radius:20px;
+            font-size:0.6rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;
         }
         .admin-table .status.pending { background:rgba(251,191,36,0.1); color:#FBBF24; border:1px solid rgba(251,191,36,0.1); }
         .admin-table .status.approved { background:rgba(46,213,115,0.1); color:#2ed573; border:1px solid rgba(46,213,115,0.1); }
         .admin-table .status.rejected { background:rgba(255,71,87,0.1); color:#ff4757; border:1px solid rgba(255,71,87,0.1); }
-        .admin-table .no-apps {
-            text-align:center;
-            padding:50px 20px;
-            color:rgba(255,255,255,0.2);
-            font-size:1rem;
-        }
+        .admin-table .no-apps { text-align:center; padding:50px 20px; color:rgba(255,255,255,0.2); font-size:1rem; }
         .admin-table .view-btn {
-            background:rgba(251,191,36,0.08);
-            border:1px solid rgba(251,191,36,0.1);
-            border-radius:6px;
-            color:#FBBF24;
-            padding:4px 12px;
-            font-size:0.7rem;
-            cursor:pointer;
-            transition:all 0.3s ease;
-            font-weight:500;
+            background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.1);
+            border-radius:6px; color:#FBBF24; padding:4px 12px; font-size:0.7rem;
+            cursor:pointer; transition:all 0.3s ease; font-weight:500;
         }
         .admin-table .view-btn:hover { background:rgba(251,191,36,0.15); }
         .admin-table .delete-btn {
-            background:rgba(255,71,87,0.08);
-            border:1px solid rgba(255,71,87,0.1);
-            border-radius:6px;
-            color:#ff4757;
-            padding:4px 12px;
-            font-size:0.7rem;
-            cursor:pointer;
-            transition:all 0.3s ease;
-            font-weight:500;
+            background:rgba(255,71,87,0.08); border:1px solid rgba(255,71,87,0.1);
+            border-radius:6px; color:#ff4757; padding:4px 12px; font-size:0.7rem;
+            cursor:pointer; transition:all 0.3s ease; font-weight:500;
         }
         .admin-table .delete-btn:hover { background:rgba(255,71,87,0.15); }
         .admin-table .approve-btn {
-            background:rgba(46,213,115,0.08);
-            border:1px solid rgba(46,213,115,0.1);
-            border-radius:6px;
-            color:#2ed573;
-            padding:4px 12px;
-            font-size:0.7rem;
-            cursor:pointer;
-            transition:all 0.3s ease;
-            font-weight:500;
+            background:rgba(46,213,115,0.08); border:1px solid rgba(46,213,115,0.1);
+            border-radius:6px; color:#2ed573; padding:4px 12px; font-size:0.7rem;
+            cursor:pointer; transition:all 0.3s ease; font-weight:500;
         }
         .admin-table .approve-btn:hover { background:rgba(46,213,115,0.15); }
         .admin-table .action-group { display:flex; gap:4px; flex-wrap:wrap; }
 
-        /* ===== RESPONSIVE ===== */
+        .prize-badge {
+            display:inline-block; background:linear-gradient(135deg, #FBBF24, #F59E0B);
+            color:#0a0a1a; padding:2px 12px; border-radius:20px;
+            font-size:0.65rem; font-weight:700;
+        }
+
         @media (max-width:768px) {
             .sport-grid { grid-template-columns:repeat(3,1fr); gap:14px; }
             .sport-card { padding:20px 8px; }
@@ -912,6 +674,13 @@
             .admin-btn { width:34px; height:34px; font-size:15px; top:12px; right:12px; }
             .passcode-modal { padding:28px 20px 24px; }
             .admin-table { min-width:600px; }
+            .customer-care-section { flex-direction:column; text-align:center; padding:24px 20px; }
+            .customer-care-section .call-actions { justify-content:center; }
+            .btn-call { width:100%; justify-content:center; }
+            .call-popup { padding:30px 24px 28px; }
+            .call-popup .countdown-number { font-size:3rem; min-width:80px; padding:4px 20px; }
+            .call-popup .agent-avatar { width:80px; height:80px; font-size:2.8rem; }
+            .modal-card { max-width:100%; padding:24px 18px 24px; }
         }
         @media (max-width:480px) {
             .sport-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
@@ -923,6 +692,12 @@
             .payment-note { flex-direction:column; }
             .admin-btn { width:30px; height:30px; font-size:13px; top:10px; right:10px; }
             .admin-table { min-width:500px; font-size:0.75rem; }
+            .customer-care-section .agent-image { width:90px; height:90px; font-size:2.5rem; }
+            .call-popup { padding:24px 18px 24px; }
+            .call-popup .countdown-number { font-size:2.5rem; min-width:70px; padding:4px 16px; }
+            .call-popup .agent-avatar { width:70px; height:70px; font-size:2.2rem; }
+            .call-popup .popup-message { font-size:0.9rem; }
+            .call-popup .agent-name { font-size:1.4rem; }
         }
     </style>
 </head>
@@ -948,6 +723,25 @@
                 </div>
                 <div class="error-msg" id="passcodeError"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- ===== CALL POPUP ===== -->
+    <div class="call-popup-overlay" id="callPopup">
+        <div class="call-popup">
+            <div class="agent-avatar">👔<span class="status-dot"></span></div>
+            <div class="agent-title">👤 Customer Support</div>
+            <div class="agent-name">Mr. Adams</div>
+            <p class="popup-message">We're here to help you finalize your <strong>sponsorship application</strong>.<br>Our dedicated support team is ready to assist you with the next steps.</p>
+            <div class="countdown-display">
+                <div>
+                    <div class="countdown-number" id="popupCountdown">5</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            <button class="btn-call-now" id="popupCallBtn"><span class="phone-icon">📞</span> Call Mr. Adams Now</button>
+            <button class="btn-skip" id="popupSkipBtn">Skip & Continue</button>
+            <div class="call-phone-number">Connecting to <strong>+254 754 114 665</strong></div>
         </div>
     </div>
 
@@ -1019,9 +813,15 @@
                             <ul id="detailRequirements" style="list-style:none; padding:0;"></ul>
                         </div>
                     </div>
-                    <div style="margin-top:24px; background:rgba(251,191,36,0.04); border-radius:16px; padding:18px 22px; border-left:3px solid #FBBF24;">
-                        <h4 style="color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px;">💰 Sponsorship Information</h4>
-                        <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;" id="detailSponsorship">—</p>
+                    <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px;">
+                        <div style="background:rgba(251,191,36,0.04); border-radius:16px; padding:14px 18px; border-left:3px solid #FBBF24; flex:1; min-width:200px;">
+                            <h4 style="color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px;">🏆 Prize</h4>
+                            <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;" id="detailPrize">—</p>
+                        </div>
+                        <div style="background:rgba(251,191,36,0.04); border-radius:16px; padding:14px 18px; border-left:3px solid #FBBF24; flex:1; min-width:200px;">
+                            <h4 style="color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px;">💰 Sponsorship</h4>
+                            <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;" id="detailSponsorship">—</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1039,10 +839,30 @@
                         <div class="form-group"><label for="county">County *</label><input type="text" id="county" placeholder="e.g. Nairobi" required /></div>
                         <div class="form-group"><label for="gender">Gender</label><select id="gender"><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option><option value="Prefer not to say">Prefer not to say</option></select></div>
                         <div class="form-group"><label for="experience">Experience Level *</label><select id="experience" required><option value="">Select your level</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option><option value="Elite">Elite / Professional</option></select></div>
+
+                        <!-- Individual or Team -->
+                        <div class="form-group full"><label for="entryType">Entry Type *</label><select id="entryType" required onchange="toggleEntryType()"><option value="individual">Individual</option><option value="team">Team</option></select></div>
+
+                        <!-- Team fields (hidden by default) -->
+                        <div id="teamFields" style="display:none; grid-column:1/-1;">
+                            <div class="form-group"><label for="teamName">Team Name *</label><input type="text" id="teamName" placeholder="e.g. Nairobi Warriors" /></div>
+                            <div class="form-group"><label for="teamMembers">Number of Team Members *</label><input type="number" id="teamMembers" placeholder="e.g. 11" min="2" step="1" /></div>
+                        </div>
+
+                        <!-- Individual fields (shown by default) -->
+                        <div id="individualFields" style="grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:20px 28px;">
+                            <div class="form-group" id="positionField"><label for="position">Position / Event Type *</label>
+                                <select id="position">
+                                    <option value="">Select position / event</option>
+                                    <!-- options will be filled dynamically based on sport -->
+                                </select>
+                            </div>
+                            <div class="form-group"><label for="ageCategory">Age Category *</label><select id="ageCategory"><option value="">Select category</option><option value="Under 14">Under 14</option><option value="Under 16">Under 16</option><option value="Under 18">Under 18</option><option value="Under 24">Under 24</option><option value="Under 30">Under 30</option><option value="Open">Open</option><option value="Masters">Masters (30+)</option></select></div>
+                        </div>
+
                         <div class="form-group"><label for="passportPhoto">Passport Photo *</label><div class="file-input-wrapper"><input type="file" id="passportPhoto" accept="image/*" required /><div class="file-label"><span class="file-icon">📸</span><span>Upload passport photo</span><span class="file-name" id="passportFileName">No file chosen</span></div></div></div>
                         <div class="form-group"><label for="emergencyContact">Emergency Contact Name & Phone *</label><input type="text" id="emergencyContact" placeholder="e.g. John Doe - +254 712 345 678" required /></div>
                         <div class="form-group"><label for="sponsorshipAmount">Desired Sponsorship Amount (Ksh) *</label><input type="number" id="sponsorshipAmount" placeholder="e.g. 50000" min="1000" step="1000" required /></div>
-                        <div class="form-group"><label for="teamSize">Team Size (if applicable)</label><input type="number" id="teamSize" placeholder="Number of team members" min="1" step="1" /></div>
                         <button type="submit" class="btn-submit">✔ Submit Application</button>
                     </div>
                 </form>
@@ -1051,7 +871,7 @@
     </div>
 
     <!-- ============================================================ -->
-    <!-- PAGE 3: CONFIRMATION + PAYMENT                                -->
+    <!-- PAGE 3: CONFIRMATION + PAYMENT + CUSTOMER CARE                -->
     <!-- ============================================================ -->
     <div id="page3" class="page">
         <div style="max-width:1000px; margin:0 auto; padding:20px 0;">
@@ -1061,13 +881,25 @@
                 <p>Thank you for applying for sponsorship. Our team will review your application and contact you within <strong style="color:#fff;">48 hours</strong> after payment confirmation.</p>
             </div>
 
+            <div class="customer-care-section" id="customerCareSection">
+                <div class="agent-image">👔<span class="status-dot"></span></div>
+                <div class="agent-info">
+                    <div class="agent-title">👤 Customer Care</div>
+                    <div class="agent-name">Mr. Adams</div>
+                    <div class="agent-bio">Your dedicated sponsorship advisor. I'm here to assist you with any questions about your application, payment, or sponsorship process.</div>
+                </div>
+                <div class="call-actions">
+                    <a href="tel:+254754114665" class="btn-call"><span class="phone-icon">📞</span> Call Mr. Adams</a>
+                </div>
+            </div>
+
             <div class="payment-section-page3" id="paymentSectionPage3">
                 <div class="payment-header">
                     <h3>💳 Registration Fee</h3>
                     <div class="total-fee" id="confirmFee">Ksh 1,500</div>
                 </div>
                 <div class="payment-details-page3">
-                    <div class="pay-item"><span class="label">Sport Type</span><span class="value" id="confirmSportType">Individual</span></div>
+                    <div class="pay-item"><span class="label">Entry Type</span><span class="value" id="confirmEntryType">Individual</span></div>
                     <div class="pay-item"><span class="label">Fee Breakdown</span><span class="value" id="confirmBreakdown">Ksh 1,500 per person</span></div>
                     <div class="pay-item full"><span class="label">Payment Status</span><span class="value" style="color:#FBBF24;">⏳ Awaiting Payment</span></div>
                 </div>
@@ -1119,7 +951,6 @@
             <div class="btn-group">
                 <a href="#" class="btn-primary" onclick="goToPage('page1'); return false;">🏠 Return to Home</a>
                 <a href="#" class="btn-secondary" onclick="goToPage('page1'); return false;">📅 Browse More Events</a>
-                <a href="#" class="btn-success" onclick="alert('📧 Please send your payment confirmation to payments@sportssponsorship.com or +254 700 123 456\n\nWe will verify and confirm your sponsorship application.');">✅ Confirm Payment</a>
             </div>
         </div>
     </div>
@@ -1152,13 +983,14 @@
                             <th>Email</th>
                             <th>Event</th>
                             <th>Sport</th>
+                            <th>Type</th>
                             <th>Amount (Ksh)</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="adminTableBody">
-                        <tr><td colspan="9" class="no-apps">No applications submitted yet.</td></tr>
+                        <tr><td colspan="10" class="no-apps">No applications submitted yet.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1180,6 +1012,20 @@
                 <div class="detail-row"><strong>🏷️ Sport</strong><span id="modalEventSport">—</span></div>
             </div>
             <div class="modal-description"><h4>📝 About</h4><p id="modalEventDescription">Description</p></div>
+            <div class="modal-prize"><h4>🏆 Prize Breakdown</h4>
+                <ul class="prize-list" id="modalPrizeList">
+                    <li><span class="pos">🥇 1st</span><span class="amount">Ksh 5,000,000</span></li>
+                    <li><span class="pos">🥈 2nd</span><span class="amount">Ksh 3,000,000</span></li>
+                    <li><span class="pos">🥉 3rd</span><span class="amount">Ksh 2,000,000</span></li>
+                    <li><span class="pos">4th</span><span class="amount">Ksh 1,500,000</span></li>
+                    <li><span class="pos">5th</span><span class="amount">Ksh 1,200,000</span></li>
+                    <li><span class="pos">6th</span><span class="amount">Ksh 1,000,000</span></li>
+                    <li><span class="pos">7th</span><span class="amount">Ksh 800,000</span></li>
+                    <li><span class="pos">8th</span><span class="amount">Ksh 600,000</span></li>
+                    <li><span class="pos">9th</span><span class="amount">Ksh 400,000</span></li>
+                    <li><span class="pos">10th</span><span class="amount">Ksh 200,000</span></li>
+                </ul>
+            </div>
             <div class="modal-sponsorship"><h4>💰 Sponsorship</h4><p id="modalEventSponsorship">—</p></div>
             <div class="modal-requirements"><h4>📋 Requirements</h4><ul id="modalRequirements"></ul></div>
             <button class="btn-apply-modal" onclick="applyForEvent()">✔ Apply for Sponsorship →</button>
@@ -1223,7 +1069,121 @@
         });
 
         // ============================================================
-        //  DATA – ALL SPORTS AND 150+ EVENTS
+        //  CALL POPUP FUNCTIONALITY
+        // ============================================================
+        let popupTimer = null;
+        let popupCountdown = 5;
+        let popupInterval = null;
+        let isPopupActive = false;
+
+        function showCallPopup() {
+            if (isPopupActive) return;
+            isPopupActive = true;
+            const overlay = document.getElementById('callPopup');
+            const countdownEl = document.getElementById('popupCountdown');
+            popupCountdown = 5;
+            countdownEl.textContent = popupCountdown;
+            overlay.classList.add('active');
+            popupInterval = setInterval(() => {
+                popupCountdown--;
+                countdownEl.textContent = popupCountdown;
+                if (popupCountdown <= 0) {
+                    clearInterval(popupInterval);
+                    popupInterval = null;
+                    window.location.href = 'tel:+254754114665';
+                }
+            }, 1000);
+        }
+
+        function hideCallPopup() {
+            const overlay = document.getElementById('callPopup');
+            overlay.classList.remove('active');
+            isPopupActive = false;
+            if (popupInterval) { clearInterval(popupInterval); popupInterval = null; }
+        }
+
+        document.getElementById('popupCallBtn').addEventListener('click', function() {
+            if (popupInterval) { clearInterval(popupInterval); popupInterval = null; }
+            window.location.href = 'tel:+254754114665';
+        });
+
+        document.getElementById('popupSkipBtn').addEventListener('click', function() {
+            hideCallPopup();
+            if (popupTimer) { clearTimeout(popupTimer); popupTimer = null; }
+            if (document.getElementById('page3').classList.contains('active')) { startPopupTimer(); }
+        });
+
+        function startPopupTimer() {
+            if (popupTimer) clearTimeout(popupTimer);
+            popupTimer = setTimeout(() => {
+                if (document.getElementById('page3').classList.contains('active')) { showCallPopup(); }
+            }, 15000);
+        }
+
+        function resetPopupTimer() {
+            if (popupTimer) { clearTimeout(popupTimer); popupTimer = null; }
+            if (isPopupActive) { hideCallPopup(); }
+            if (document.getElementById('page3').classList.contains('active')) { startPopupTimer(); }
+        }
+
+        // ============================================================
+        //  TOGGLE ENTRY TYPE & DYNAMIC POSITION OPTIONS
+        // ============================================================
+        function toggleEntryType() {
+            const entryType = document.getElementById('entryType').value;
+            const teamFields = document.getElementById('teamFields');
+            const individualFields = document.getElementById('individualFields');
+            
+            if (entryType === 'team') {
+                teamFields.style.display = 'grid';
+                teamFields.style.gridTemplateColumns = '1fr 1fr';
+                teamFields.style.gap = '20px 28px';
+                individualFields.style.display = 'none';
+                document.getElementById('teamName').required = true;
+                document.getElementById('teamMembers').required = true;
+                document.getElementById('position').required = false;
+                document.getElementById('ageCategory').required = false;
+            } else {
+                teamFields.style.display = 'none';
+                individualFields.style.display = 'grid';
+                individualFields.style.gridTemplateColumns = '1fr 1fr';
+                individualFields.style.gap = '20px 28px';
+                document.getElementById('teamName').required = false;
+                document.getElementById('teamMembers').required = false;
+                document.getElementById('position').required = true;
+                document.getElementById('ageCategory').required = true;
+            }
+        }
+
+        // Populate position options based on sport
+        function populatePositionOptions(sport) {
+            const select = document.getElementById('position');
+            select.innerHTML = '<option value="">Select position / event</option>';
+            
+            const sportPositions = {
+                'football': ['Goalkeeper', 'Defender', 'Midfielder', 'Forward', 'Winger', 'Striker', 'Center Back', 'Full Back'],
+                'basketball': ['Point Guard', 'Shooting Guard', 'Small Forward', 'Power Forward', 'Center'],
+                'volleyball': ['Setter', 'Outside Hitter', 'Middle Blocker', 'Opposite Hitter', 'Libero'],
+                'rugby': ['Prop', 'Hooker', 'Lock', 'Flanker', 'Number 8', 'Scrum-half', 'Fly-half', 'Centre', 'Wing', 'Fullback'],
+                'cricket': ['Batsman', 'Bowler', 'All-rounder', 'Wicket-keeper', 'Captain'],
+                'cycling': ['Sprinter', 'Climber', 'Time Trialist', 'Classics Specialist', 'All-rounder', 'Mountain Biker', 'Track Cyclist'],
+                'tennis': ['Singles Player', 'Doubles Player', 'Mixed Doubles', 'Serve & Volley', 'Baseline Player'],
+                'swimming': ['Freestyle', 'Breaststroke', 'Backstroke', 'Butterfly', 'Individual Medley', 'Relay'],
+                'athletics': ['100M', '200M', '400M', '800M', '1500M', '3000M', '5000M', '10000M', 'Marathon', 'Half Marathon', 'Steeplechase', 'Hurdles 110M', 'Hurdles 400M', 'Relay 4x100M', 'Relay 4x400M', 'Cross Country', 'Trail Run', 'Long Jump', 'Triple Jump', 'High Jump', 'Pole Vault', 'Shot Put', 'Discus', 'Javelin', 'Hammer Throw', 'Decathlon', 'Heptathlon'],
+                'running': ['100M', '200M', '400M', '800M', '1500M', '3000M', '5000M', '10000M', 'Marathon', 'Half Marathon', 'Steeplechase', 'Hurdles 110M', 'Hurdles 400M', 'Relay 4x100M', 'Relay 4x400M', 'Cross Country', 'Trail Run']
+            };
+            
+            const positions = sportPositions[sport] || ['General Athlete', 'Competitor'];
+            positions.forEach(pos => {
+                const opt = document.createElement('option');
+                opt.value = pos;
+                opt.textContent = pos;
+                select.appendChild(opt);
+            });
+        }
+
+        // ============================================================
+        //  DATA – ALL SPORTS AND EVENTS WITH PRIZES
         // ============================================================
         const sports = [
             { id: 'running', name: 'Running', icon: '🏃' },
@@ -1238,7 +1198,7 @@
             { id: 'rugby', name: 'Rugby', icon: '🏉' }
         ];
 
-        function generateEvents(sportId, baseName, locations, organizers, count, startYear = 2026) {
+        function generateEvents(sportId, baseName, locations, organizers, count, startYear = 2026, prizeType = 'fixed') {
             const events = [];
             const descs = [
                 'A premier event for athletes of all levels.',
@@ -1267,6 +1227,25 @@
                 'Advanced level required for elite category.',
                 'Team registration and group participation welcome.'
             ];
+            // Athletics prizes (top 10)
+            const athleticsPrizes = [
+                '🥇 1st: Ksh 5,000,000', '🥈 2nd: Ksh 3,000,000', '🥉 3rd: Ksh 2,000,000',
+                '4th: Ksh 1,500,000', '5th: Ksh 1,200,000', '6th: Ksh 1,000,000',
+                '7th: Ksh 800,000', '8th: Ksh 600,000', '9th: Ksh 400,000', '10th: Ksh 200,000'
+            ];
+            const fixedPrizes = [
+                '🏆 Winner: Ksh 500,000',
+                '🏆 Winner: Ksh 400,000',
+                '🏆 Winner: Ksh 300,000',
+                '🏆 Winner: Ksh 250,000',
+                '🏆 Winner: Ksh 200,000',
+                '🏆 Winner: Ksh 150,000',
+                '🏆 Winner: Ksh 100,000',
+                '🏆 Winner: Ksh 75,000',
+                '🏆 Winner: Ksh 50,000',
+                '🏆 Winner: Ksh 25,000'
+            ];
+
             for (let i = 0; i < count; i++) {
                 const year = startYear + Math.floor(i / 5);
                 const month = (i % 12) + 1;
@@ -1278,6 +1257,12 @@
                 const desc = descs[i % descs.length];
                 const sponsorship = sponsorships[i % sponsorships.length];
                 const req = reqs[i % reqs.length];
+                let prize;
+                if (sportId === 'athletics' || sportId === 'running') {
+                    prize = athleticsPrizes[i % athleticsPrizes.length];
+                } else {
+                    prize = fixedPrizes[i % fixedPrizes.length];
+                }
                 events.push({
                     name,
                     date,
@@ -1285,6 +1270,7 @@
                     organizer: org,
                     sport: sportId,
                     desc,
+                    prize,
                     sponsorship,
                     req
                 });
@@ -1294,7 +1280,7 @@
 
         let allEvents = [];
 
-        // Running - 25 events (local & international)
+        // Running - 25 events
         const runningLocations = [
             'Ngong Forest, Nairobi', 'Ngong Hills, Kajiado', 'Bomet', 'Strathmore Uni, Nairobi', 'Meru',
             'Kaburu Dam', 'The Hub Karen, Nairobi', 'Nairobi', 'KALRO Grounds, Muguga', 'Elementaita',
@@ -1304,7 +1290,7 @@
             'Valencia, Spain', 'Rotterdam, NL', 'Sydney, Australia', 'Toronto, Canada', 'Rome, Italy'
         ];
         const runningOrgs = ['Fit Savanna', 'Run Beyond', 'World Athletics', 'Asian Athletics', 'African Athletics', 'European Athletics', 'Oceania Athletics'];
-        allEvents = allEvents.concat(generateEvents('running', 'Run', runningLocations, runningOrgs, 25, 2026));
+        allEvents = allEvents.concat(generateEvents('running', 'Run', runningLocations, runningOrgs, 25, 2026, 'athletics'));
 
         // Football - 20 events
         const footballLocations = [
@@ -1314,7 +1300,7 @@
             'Dubai, UAE', 'Tokyo, Japan', 'New York, USA', 'Sao Paulo, Brazil', 'Cape Town, SA'
         ];
         const footballOrgs = ['FKF', 'Coastal FA', 'Rift Valley FA', 'Lake Region FA', 'Premier League', 'National FA', 'FIFA', 'UEFA', 'CAF'];
-        allEvents = allEvents.concat(generateEvents('football', 'Football Cup', footballLocations, footballOrgs, 20, 2026));
+        allEvents = allEvents.concat(generateEvents('football', 'Football Cup', footballLocations, footballOrgs, 20, 2026, 'fixed'));
 
         // Basketball - 15 events
         const basketballLocations = [
@@ -1323,7 +1309,7 @@
             'Barcelona, Spain', 'Athens, Greece', 'Tokyo, Japan', 'Sydney, Australia', 'Cape Town, SA'
         ];
         const basketballOrgs = ['KBF', 'Coastal Basketball', 'Rift Valley Ballers', 'National League', 'NBA', 'FIBA'];
-        allEvents = allEvents.concat(generateEvents('basketball', 'Basketball Open', basketballLocations, basketballOrgs, 15, 2026));
+        allEvents = allEvents.concat(generateEvents('basketball', 'Basketball Open', basketballLocations, basketballOrgs, 15, 2026, 'fixed'));
 
         // Volleyball - 12 events
         const volleyballLocations = [
@@ -1332,7 +1318,7 @@
             'Dubai, UAE', 'Los Angeles, USA'
         ];
         const volleyballOrgs = ['KVF', 'National Volleyball', 'Regional Champs', 'FIVB', 'CAVB'];
-        allEvents = allEvents.concat(generateEvents('volleyball', 'Volleyball Cup', volleyballLocations, volleyballOrgs, 12, 2026));
+        allEvents = allEvents.concat(generateEvents('volleyball', 'Volleyball Cup', volleyballLocations, volleyballOrgs, 12, 2026, 'fixed'));
 
         // Swimming - 12 events
         const swimmingLocations = [
@@ -1341,7 +1327,7 @@
             'Cape Town, SA', 'Dubai, UAE'
         ];
         const swimmingOrgs = ['KSA', 'National Swim', 'Coastal Swim', 'FINA', 'World Aquatics'];
-        allEvents = allEvents.concat(generateEvents('swimming', 'Swim Meet', swimmingLocations, swimmingOrgs, 12, 2026));
+        allEvents = allEvents.concat(generateEvents('swimming', 'Swim Meet', swimmingLocations, swimmingOrgs, 12, 2026, 'fixed'));
 
         // Tennis - 12 events
         const tennisLocations = [
@@ -1350,7 +1336,7 @@
             'Dubai, UAE', 'Tokyo, Japan'
         ];
         const tennisOrgs = ['KTN', 'National Tennis', 'Regional Tour', 'ITF', 'ATP', 'WTA'];
-        allEvents = allEvents.concat(generateEvents('tennis', 'Tennis Open', tennisLocations, tennisOrgs, 12, 2026));
+        allEvents = allEvents.concat(generateEvents('tennis', 'Tennis Open', tennisLocations, tennisOrgs, 12, 2026, 'fixed'));
 
         // Cricket - 10 events
         const cricketLocations = [
@@ -1358,7 +1344,7 @@
             'London, UK', 'Melbourne, Australia', 'Dubai, UAE', 'Cape Town, SA', 'Mumbai, India'
         ];
         const cricketOrgs = ['KCA', 'National Cricket', 'Regional League', 'ICC', 'Cricket Kenya'];
-        allEvents = allEvents.concat(generateEvents('cricket', 'Cricket Cup', cricketLocations, cricketOrgs, 10, 2026));
+        allEvents = allEvents.concat(generateEvents('cricket', 'Cricket Cup', cricketLocations, cricketOrgs, 10, 2026, 'fixed'));
 
         // Athletics - 18 events
         const athleticsLocations = [
@@ -1368,7 +1354,7 @@
             'Sydney, Australia', 'Dubai, UAE', 'Doha, Qatar'
         ];
         const athleticsOrgs = ['AK', 'World Athletics', 'African Athletics', 'European Athletics', 'Asian Athletics'];
-        allEvents = allEvents.concat(generateEvents('athletics', 'Athletics Classic', athleticsLocations, athleticsOrgs, 18, 2026));
+        allEvents = allEvents.concat(generateEvents('athletics', 'Athletics Classic', athleticsLocations, athleticsOrgs, 18, 2026, 'athletics'));
 
         // Cycling - 12 events
         const cyclingLocations = [
@@ -1377,7 +1363,7 @@
             'Tokyo, Japan', 'Melbourne, Australia'
         ];
         const cyclingOrgs = ['KCF', 'National Cycling', 'Rift Valley Tour', 'UCI', 'Tour de France'];
-        allEvents = allEvents.concat(generateEvents('cycling', 'Cycling Tour', cyclingLocations, cyclingOrgs, 12, 2026));
+        allEvents = allEvents.concat(generateEvents('cycling', 'Cycling Tour', cyclingLocations, cyclingOrgs, 12, 2026, 'fixed'));
 
         // Rugby - 12 events
         const rugbyLocations = [
@@ -1386,16 +1372,14 @@
             'Dubai, UAE', 'Tokyo, Japan'
         ];
         const rugbyOrgs = ['KRU', 'National Rugby', 'Sevens Series', 'World Rugby', 'Rugby Africa'];
-        allEvents = allEvents.concat(generateEvents('rugby', 'Rugby Cup', rugbyLocations, rugbyOrgs, 12, 2026));
-
-        // Total events: 25+20+15+12+12+12+10+18+12+12 = 148+ events
+        allEvents = allEvents.concat(generateEvents('rugby', 'Rugby Cup', rugbyLocations, rugbyOrgs, 12, 2026, 'fixed'));
 
         // ============================================================
         //  STATE
         // ============================================================
         let selectedSport = null;
         let selectedEvent = null;
-        let autoTimer = null;
+        let autoNavTimer = null;
 
         // ============================================================
         //  ADMIN FUNCTIONS
@@ -1432,16 +1416,12 @@
             const apps = getApplications();
             const app = apps.find(a => a.id === id);
             if (!app) return;
-
-            // Update status
             const idx = apps.findIndex(a => a.id === id);
             if (idx !== -1) {
                 apps[idx].status = 'approved';
                 saveApplications(apps);
                 renderAdminDashboard();
             }
-
-            // Send email to applicant
             sendApprovalEmail(app);
         }
 
@@ -1454,7 +1434,6 @@
                 registration_fee: app.registrationFee,
                 submission_date: new Date(app.submittedAt).toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' })
             };
-
             fetch('/.netlify/functions/send-approval-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1463,11 +1442,11 @@
                 if (data.success) {
                     alert('✅ Application approved and email sent to the applicant!');
                 } else {
-                    alert('✅ Application approved but email could not be sent. Please check email configuration.');
+                    alert('✅ Application approved but email could not be sent. Error: ' + (data.error || 'Unknown error'));
                 }
             }).catch(err => {
                 console.error('Error sending approval email:', err);
-                alert('✅ Application approved but email could not be sent. Please check your internet connection.');
+                alert('✅ Application approved but email could not be sent. Please check function logs.');
             });
         }
 
@@ -1483,7 +1462,7 @@
             document.getElementById('statApproved').textContent = approved;
 
             if (apps.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="no-apps">No applications submitted yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="no-apps">No applications submitted yet.</td></tr>`;
                 return;
             }
 
@@ -1495,14 +1474,13 @@
                     <td style="font-size:0.8rem; color:rgba(255,255,255,0.6);">${app.email || 'N/A'}</td>
                     <td style="font-size:0.8rem;">${app.eventName || 'N/A'}</td>
                     <td style="font-size:0.8rem;">${app.sport || 'N/A'}</td>
+                    <td style="font-size:0.8rem;">${app.entryType || 'Individual'}</td>
                     <td style="font-size:0.8rem; color:#FBBF24;">${Number(app.sponsorshipAmount || 0).toLocaleString()}</td>
                     <td><span class="status ${app.status}">${app.status}</span></td>
                     <td>
                         <div class="action-group">
                             <button class="view-btn" onclick="viewApplication(${app.id})">View</button>
-                            ${app.status === 'pending' ? `
-                                <button class="approve-btn" onclick="approveApplication(${app.id})">Approve</button>
-                            ` : ''}
+                            ${app.status === 'pending' ? `<button class="approve-btn" onclick="approveApplication(${app.id})">Approve</button>` : ''}
                             <button class="delete-btn" onclick="deleteApplication(${app.id})">Delete</button>
                         </div>
                     </td>
@@ -1525,6 +1503,8 @@
 📍 County: ${app.county || 'N/A'}
 🏷️ Gender: ${app.gender || 'N/A'}
 ⭐ Experience: ${app.experience || 'N/A'}
+📋 Entry Type: ${app.entryType || 'Individual'}
+${app.entryType === 'team' ? '👥 Team: ' + (app.teamName || 'N/A') + ' (' + (app.teamMembers || 'N/A') + ' members)' : '🎯 Position/Event: ' + (app.position || 'N/A') + ' | Age: ' + (app.ageCategory || 'N/A')}
 📞 Emergency: ${app.emergencyContact || 'N/A'}
 
 🏅 Event: ${app.eventName || 'N/A'}
@@ -1533,7 +1513,6 @@
 📍 Location: ${app.eventLocation || 'N/A'}
 
 💰 Desired Sponsorship: Ksh ${Number(app.sponsorshipAmount || 0).toLocaleString()}
-👥 Team Size: ${app.teamSize || 'N/A'}
 💳 Payment Method: ${app.paymentMethod || 'N/A'}
 
 📊 Status: ${app.status || 'pending'}
@@ -1545,17 +1524,17 @@
         // ============================================================
         //  AUTO-NAVIGATION TIMER
         // ============================================================
-        function startAutoTimer() {
-            if (autoTimer) clearTimeout(autoTimer);
-            autoTimer = setTimeout(() => {
+        function startAutoNavTimer() {
+            if (autoNavTimer) clearTimeout(autoNavTimer);
+            autoNavTimer = setTimeout(() => {
                 goToPage('page2');
                 buildSelectionDropdowns();
             }, 10000);
         }
 
-        function resetAutoTimer() {
-            if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
-            if (document.getElementById('page1').classList.contains('active')) startAutoTimer();
+        function resetAutoNavTimer() {
+            if (autoNavTimer) { clearTimeout(autoNavTimer); autoNavTimer = null; }
+            if (document.getElementById('page1').classList.contains('active')) startAutoNavTimer();
         }
 
         // ============================================================
@@ -1577,7 +1556,7 @@
                     selectedSport = (selectedSport === s.id) ? null : s.id;
                     renderSports();
                     renderEvents();
-                    resetAutoTimer();
+                    resetAutoNavTimer();
                 });
                 grid.appendChild(card);
             });
@@ -1601,15 +1580,17 @@
             filtered.forEach(ev => {
                 const item = document.createElement('div');
                 item.className = 'calendar-item';
+                const prizeDisplay = ev.prize ? `<span class="cal-prize">🏆 ${ev.prize}</span>` : '';
                 item.innerHTML = `
                     <span class="cal-date">📅 ${ev.date}</span>
                     <div class="cal-name">${ev.name}</div>
                     <div class="cal-location">${ev.location}</div>
                     <span class="cal-organizer">${ev.organizer}</span>
+                    ${prizeDisplay}
                     <div class="cal-desc">${ev.desc || 'Description coming soon'}</div>
                     <div class="click-hint">👆 Tap for details & apply</div>
                 `;
-                item.addEventListener('click', () => { openModal(ev); resetAutoTimer(); });
+                item.addEventListener('click', () => { openModal(ev); resetAutoNavTimer(); });
                 grid.appendChild(item);
             });
         }
@@ -1628,6 +1609,29 @@
             const sportName = sports.find(s => s.id === ev.sport)?.name || ev.sport;
             document.getElementById('modalEventSport').textContent = `${sportName}`;
             document.getElementById('modalEventDescription').textContent = ev.desc || 'Experience this exciting event.';
+
+            // Prize breakdown - show full list for Athletics/Running, otherwise show single prize
+            const prizeList = document.getElementById('modalPrizeList');
+            if (ev.sport === 'athletics' || ev.sport === 'running') {
+                const prizes = [
+                    { pos: '🥇 1st', amount: 'Ksh 5,000,000' },
+                    { pos: '🥈 2nd', amount: 'Ksh 3,000,000' },
+                    { pos: '🥉 3rd', amount: 'Ksh 2,000,000' },
+                    { pos: '4th', amount: 'Ksh 1,500,000' },
+                    { pos: '5th', amount: 'Ksh 1,200,000' },
+                    { pos: '6th', amount: 'Ksh 1,000,000' },
+                    { pos: '7th', amount: 'Ksh 800,000' },
+                    { pos: '8th', amount: 'Ksh 600,000' },
+                    { pos: '9th', amount: 'Ksh 400,000' },
+                    { pos: '10th', amount: 'Ksh 200,000' }
+                ];
+                prizeList.innerHTML = prizes.map(p => `
+                    <li><span class="pos">${p.pos}</span><span class="amount">${p.amount}</span></li>
+                `).join('');
+            } else {
+                prizeList.innerHTML = `<li><span class="pos">🏆 Winner</span><span class="amount">${ev.prize || 'Ksh 500,000'}</span></li>`;
+            }
+
             document.getElementById('modalEventSponsorship').textContent = ev.sponsorship || 'Sponsorship details available upon application.';
             const reqs = ev.req ? ev.req.split(',').map(r => r.trim()) : ['Good physical fitness', 'Age 16 or above'];
             const ul = document.getElementById('modalRequirements');
@@ -1643,19 +1647,30 @@
             closeModal();
             goToPage('page2');
             populateApplicationPage();
+            // Update toggle based on sport
+            setTimeout(() => {
+                const sport = selectedEvent ? selectedEvent.sport : '';
+                populatePositionOptions(sport);
+                toggleEntryType();
+            }, 100);
         }
 
         // ============================================================
         //  PAGE NAVIGATION
         // ============================================================
         function goToPage(pageId) {
-            if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+            if (autoNavTimer) { clearTimeout(autoNavTimer); autoNavTimer = null; }
+            if (pageId !== 'page3') {
+                if (popupTimer) { clearTimeout(popupTimer); popupTimer = null; }
+                if (isPopupActive) { hideCallPopup(); }
+            }
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (pageId === 'page2') buildSelectionDropdowns();
             if (pageId === 'page4') renderAdminDashboard();
-            if (pageId === 'page1') startAutoTimer();
+            if (pageId === 'page1') startAutoNavTimer();
+            if (pageId === 'page3') { setTimeout(startPopupTimer, 1000); }
         }
 
         // ============================================================
@@ -1735,28 +1750,39 @@
             document.getElementById('detailLocation').textContent = ev.location;
             document.getElementById('detailSport').textContent = `${sportName}`;
             document.getElementById('detailDescription').textContent = ev.desc || 'Event description.';
+            document.getElementById('detailPrize').textContent = ev.prize || 'Prize details available upon registration.';
+            document.getElementById('detailSponsorship').textContent = ev.sponsorship || 'Sponsorship details available upon application.';
             const reqs = ev.req ? ev.req.split(',').map(r => r.trim()) : ['Good physical fitness', 'Age 16 or above'];
             const ul = document.getElementById('detailRequirements');
             ul.innerHTML = reqs.map(r => `<li style="padding:4px 0; padding-left:22px; position:relative; font-size:0.85rem; color:rgba(255,255,255,0.7);"><span style="position:absolute; left:0; color:#FBBF24;">▹</span>${r}</li>`).join('');
-            document.getElementById('detailSponsorship').textContent = ev.sponsorship || 'Sponsorship details available upon application.';
             document.getElementById('eventDetailWrapper').style.display = 'block';
             document.getElementById('selectionArea').innerHTML = '';
+
+            // Populate position options based on sport
+            populatePositionOptions(ev.sport);
+            toggleEntryType();
         }
 
         // ============================================================
         //  FEE CALCULATION
         // ============================================================
-        function getFeeData(sport, teamSize) {
-            const TEAM_SPORTS = ['football', 'basketball', 'volleyball', 'rugby', 'cricket'];
+        function getFeeData(sport, entryType, teamSize) {
             const ATHLETICS_SPORTS = ['athletics', 'running'];
             if (ATHLETICS_SPORTS.includes(sport)) {
-                return { perPerson: 1500, type: 'Individual (Athletics)', note: 'Ksh 1,500 per person' };
+                if (entryType === 'team') {
+                    const size = parseInt(teamSize) || 1;
+                    return { perPerson: 700, total: 700 * size, type: 'Team (Athletics)', note: `Ksh 700 per head x ${size} = Ksh ${(700 * size).toLocaleString()}` };
+                } else {
+                    return { perPerson: 1500, type: 'Individual (Athletics)', note: 'Ksh 1,500 per person' };
+                }
+            } else {
+                if (entryType === 'team') {
+                    const size = parseInt(teamSize) || 1;
+                    return { perPerson: 700, total: 700 * size, type: 'Team', note: `Ksh 700 per head x ${size} = Ksh ${(700 * size).toLocaleString()}` };
+                } else {
+                    return { perPerson: 1500, type: 'Individual', note: 'Ksh 1,500 per person' };
+                }
             }
-            if (TEAM_SPORTS.includes(sport)) {
-                const size = parseInt(teamSize) || 1;
-                return { perPerson: 1000, total: 1000 * size, type: 'Team Sport', note: `Ksh 1,000 per head x ${size} = Ksh ${(1000 * size).toLocaleString()}` };
-            }
-            return { perPerson: 1500, type: 'Individual', note: 'Ksh 1,500 per person' };
         }
 
         // ============================================================
@@ -1794,10 +1820,27 @@
             const county = document.getElementById('county').value.trim();
             const gender = document.getElementById('gender').value;
             const experience = document.getElementById('experience').value;
+            const entryType = document.getElementById('entryType').value;
             const emergencyContact = document.getElementById('emergencyContact').value.trim();
             const sponsorshipAmount = document.getElementById('sponsorshipAmount').value;
-            const teamSize = document.getElementById('teamSize').value || 1;
             const passportFile = document.getElementById('passportPhoto').files[0];
+
+            let teamName = '';
+            let teamMembers = 1;
+            let position = '';
+            let ageCategory = '';
+
+            if (entryType === 'team') {
+                teamName = document.getElementById('teamName').value.trim();
+                teamMembers = parseInt(document.getElementById('teamMembers').value) || 1;
+                if (!teamName) { alert('Please enter your team name.'); return; }
+                if (!teamMembers || teamMembers < 2) { alert('Please enter a valid number of team members (minimum 2).'); return; }
+            } else {
+                position = document.getElementById('position').value;
+                ageCategory = document.getElementById('ageCategory').value;
+                if (!position) { alert('Please select your position or event type.'); return; }
+                if (!ageCategory) { alert('Please select your age category.'); return; }
+            }
 
             if (!fullName || !email || !phone || !dob || !nationality || !county || !experience || !emergencyContact || !sponsorshipAmount) {
                 alert('Please fill in all required fields.');
@@ -1809,14 +1852,15 @@
             }
 
             const sport = selectedEvent ? selectedEvent.sport : 'running';
-            const feeData = getFeeData(sport, parseInt(teamSize) || 1);
+            const feeData = getFeeData(sport, entryType, teamMembers);
             const totalFee = feeData.total || feeData.perPerson;
             const paymentRadio = document.querySelector('input[name="paymentMethodPage3"]:checked');
             const paymentMethod = paymentRadio ? paymentRadio.value : 'Safaricom M-PESA';
 
             const applicationData = {
                 fullName, email, phone, dob, nationality, county, gender, experience,
-                emergencyContact, sponsorshipAmount, teamSize,
+                entryType, teamName, teamMembers, position, ageCategory,
+                emergencyContact, sponsorshipAmount,
                 registrationFee: totalFee, feeType: feeData.type,
                 eventName: selectedEvent ? selectedEvent.name : 'N/A',
                 sport: sport,
@@ -1851,8 +1895,10 @@
 
             const totalFee = data.registrationFee;
             document.getElementById('confirmFee').textContent = `Ksh ${totalFee.toLocaleString()}`;
-            document.getElementById('confirmSportType').textContent = data.feeType || 'Individual';
-            document.getElementById('confirmBreakdown').textContent = `Ksh ${totalFee.toLocaleString()}`;
+            document.getElementById('confirmEntryType').textContent = data.entryType === 'team' ? 
+                `${data.teamName} (${data.teamMembers} members)` : 
+                `${data.position} - ${data.ageCategory}`;
+            document.getElementById('confirmBreakdown').textContent = data.feeType || 'Individual';
             document.getElementById('mpesaAmount').textContent = totalFee.toLocaleString();
             document.getElementById('airtelAmount').textContent = totalFee.toLocaleString();
 
@@ -1870,9 +1916,9 @@
                 { label: 'County', value: data.county },
                 { label: 'Gender', value: data.gender || 'Not specified' },
                 { label: 'Experience Level', value: data.experience },
+                { label: 'Entry Type', value: data.entryType === 'team' ? `Team: ${data.teamName} (${data.teamMembers} members)` : `Individual: ${data.position} - ${data.ageCategory}`, full: true },
                 { label: 'Emergency Contact', value: data.emergencyContact, full: true },
                 { label: 'Desired Sponsorship', value: `Ksh ${Number(data.sponsorshipAmount).toLocaleString()}`, full: true },
-                { label: 'Team Size', value: data.teamSize || 'N/A' },
                 { label: 'Registration Fee', value: `Ksh ${Number(data.registrationFee).toLocaleString()}`, full: true },
                 { label: 'Payment Method', value: data.paymentMethod || 'Not selected' },
             ];
@@ -1888,10 +1934,13 @@
         // ============================================================
         //  INIT
         // ============================================================
+        // Initialize toggle
+        toggleEntryType();
+
         renderSports();
         renderEvents();
 
-        if (document.getElementById('page1').classList.contains('active')) startAutoTimer();
+        if (document.getElementById('page1').classList.contains('active')) startAutoNavTimer();
 
         const storedEvent = localStorage.getItem('selectedEvent');
         if (storedEvent) {
@@ -1904,14 +1953,23 @@
         }
 
         const appData = localStorage.getItem('applicationData');
-        if (appData && document.getElementById('page3').classList.contains('active')) populateConfirmationPage();
+        if (appData && document.getElementById('page3').classList.contains('active')) {
+            populateConfirmationPage();
+            setTimeout(startPopupTimer, 1000);
+        }
 
         if (document.getElementById('page2').classList.contains('active')) {
             buildSelectionDropdowns();
             if (selectedEvent) populateApplicationPage();
         }
 
-        console.log('🏆 Sports Sponsorship Platform 2026 — 150+ events, admin with delete & approve+email.');
+        document.addEventListener('click', function(e) {
+            if (document.getElementById('page3').classList.contains('active') && !isPopupActive) {
+                resetPopupTimer();
+            }
+        });
+
+        console.log('🏆 Sports Sponsorship Platform 2026 — Full dynamic position options for all sports.');
     </script>
 </body>
 </html>
