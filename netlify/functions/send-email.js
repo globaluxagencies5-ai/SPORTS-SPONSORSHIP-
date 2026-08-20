@@ -1,12 +1,16 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async (event) => {
+  console.log('📧 Function invoked:', event.httpMethod);
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
   try {
     const formData = JSON.parse(event.body);
+    console.log('📋 Received data:', formData);
+
     const {
       fullName, email, phone, dob, nationality, county, gender, experience,
       emergencyContact, sponsorshipAmount, teamSize,
@@ -14,7 +18,19 @@ exports.handler = async (event) => {
       paymentMethod
     } = formData;
 
+    // Validate environment variables
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
+      console.error('❌ Missing GMAIL environment variables!');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Email configuration missing. Please set GMAIL_USER and GMAIL_PASS.' })
+      };
+    }
+
+    console.log('📧 GMAIL_USER configured:', process.env.GMAIL_USER);
+
     if (!fullName || !email || !phone || !eventName) {
+      console.error('❌ Missing required fields');
       return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields' }) };
     }
 
@@ -24,7 +40,22 @@ exports.handler = async (event) => {
         user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_PASS,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
+
+    // Verify transporter
+    try {
+      await transporter.verify();
+      console.log('✅ Transporter verified successfully');
+    } catch (verifyError) {
+      console.error('❌ Transporter verification failed:', verifyError.message);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Email authentication failed. Check GMAIL_USER and GMAIL_PASS.' })
+      };
+    }
 
     // ---------- EMAIL TO APPLICANT ----------
     const applicantMail = {
@@ -227,9 +258,17 @@ exports.handler = async (event) => {
 *Sports Sponsorship Platform*
     `;
 
+    // Send emails
+    console.log('📧 Sending applicant email...');
     await transporter.sendMail(applicantMail);
-    await transporter.sendMail(adminMail);
+    console.log('✅ Applicant email sent');
 
+    console.log('📧 Sending admin email...');
+    await transporter.sendMail(adminMail);
+    console.log('✅ Admin email sent');
+
+    // Send Telegram
+    console.log('📱 Sending Telegram...');
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -239,16 +278,18 @@ exports.handler = async (event) => {
         parse_mode: 'Markdown',
       }),
     });
+    console.log('✅ Telegram sent');
 
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, message: 'Emails and Telegram sent successfully!' }),
     };
   } catch (error) {
-    console.error('Error:', error);
+    console.error('❌ Error:', error);
+    console.error('❌ Error stack:', error.stack);
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, error: 'Failed to send notifications.' }),
+      body: JSON.stringify({ success: false, error: error.message || 'Failed to send notifications.' }),
     };
   }
 };
