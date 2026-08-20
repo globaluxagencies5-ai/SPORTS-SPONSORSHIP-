@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Sports Sponsorship Platform 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:#0a0a1a; color:#fff; line-height:1.7; min-height:100vh; overflow-x:hidden; }
+        ::-webkit-scrollbar { width:8px; }
+        ::-webkit-scrollbar-track { background:#0a0a1a; }
+        ::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#FBBF24,#F59E0B); border-radius:10px; }
+
+        /* ===== ADMIN BUTTON ===== */
+        .admin-btn {
+            position:fixed;
+            top:18px;
+            right:18px;
+            z-index:9999;
+            background:rgba(251,191,36,0.06);
+            border:1px solid rgba(251,191,36,0.12);
+            border-radius:50%;
+            width:40px;
+            height:40px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:rgba(251,191,36,0.25);
+            font-size:18px;
+            cursor:pointer;
+            transition:all 0.4s ease;
+            text-decoration:none;
+            backdrop-filter:blur(4px);
+            box-shadow:0 0 20px rgba(251,191,36,0.02);
+        }
+        .admin-btn:hover {
+            background:rgba(251,191,36,0.1);
+            border-color:rgba(251,191,36,0.25);
+            color:rgba(251,191,36,0.6);
+            transform:rotate(90deg) scale(1.05);
+            box-shadow:0 0 40px rgba(251,191,36,0.06);
+        }
+        .admin-btn .tooltip {
+            position:absolute;
+            right:100%;
+            top:50%;
+            transform:translateY(-50%);
+            padding:4px 12px;
+            background:rgba(10,10,26,0.92);
+            border:1px solid rgba(251,191,36,0.08);
+            border-radius:6px;
+            font-size:0.6rem;
+            color:rgba(251,191,36,0.2);
+            white-space:nowrap;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity 0.3s ease;
+            margin-right:10px;
+            letter-spacing:0.5px;
+            font-weight:500;
+        }
+        .admin-btn:hover .tooltip { opacity:1; }
+        .admin-btn .gear-icon { display:inline-block; transition:transform 0.6s ease; }
+        .admin-btn:hover .gear-icon { transform:rotate(90deg); }
+
+        /* ===== PASSCODE MODAL ===== */
+        .passcode-overlay {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.7);
+            backdrop-filter:blur(8px);
+            z-index:10000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            opacity:0;
+            visibility:hidden;
+            transition:all 0.3s ease;
+            padding:20px;
+        }
+        .passcode-overlay.active { opacity:1; visibility:visible; }
+        .passcode-modal {
+            background:linear-gradient(145deg, #1a1a2e, #2a2a4a);
+            border:1px solid rgba(251,191,36,0.1);
+            border-radius:28px;
+            max-width:400px;
+            width:100%;
+            padding:36px 32px 32px;
+            box-shadow:0 40px 80px rgba(0,0,0,0.6);
+            transform:scale(0.95) translateY(20px);
+            transition:all 0.3s ease;
+            text-align:center;
+        }
+        .passcode-overlay.active .passcode-modal { transform:scale(1) translateY(0); }
+        .passcode-modal .lock-icon { font-size:3rem; display:block; margin-bottom:12px; color:#FBBF24; }
+        .passcode-modal h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:#FBBF24; margin-bottom:6px; }
+        .passcode-modal p { color:rgba(255,255,255,0.4); font-size:0.9rem; margin-bottom:20px; }
+        .passcode-modal .input-group { display:flex; flex-direction:column; gap:12px; }
+        .passcode-modal input {
+            padding:14px 18px;
+            border-radius:12px;
+            border:1px solid rgba(255,255,255,0.08);
+            background:rgba(255,255,255,0.04);
+            color:#fff;
+            font-size:1rem;
+            font-family:'Inter',sans-serif;
+            outline:none;
+            transition:all 0.3s ease;
+            text-align:center;
+            letter-spacing:2px;
+        }
+        .passcode-modal input:focus { border-color:#FBBF24; background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px rgba(251,191,36,0.05); }
+        .passcode-modal .btn-row { display:flex; gap:12px; margin-top:8px; }
+        .passcode-modal .btn-row button {
+            flex:1;
+            padding:12px;
+            border-radius:50px;
+            border:none;
+            font-weight:600;
+            font-size:0.95rem;
+            cursor:pointer;
+            transition:all 0.3s ease;
+        }
+        .passcode-modal .btn-row .btn-submit-code {
+            background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            color:#0a0a1a;
+            box-shadow:0 4px 20px rgba(251,191,36,0.15);
+        }
+        .passcode-modal .btn-row .btn-submit-code:hover { transform:scale(1.02); box-shadow:0 8px 30px rgba(251,191,36,0.25); }
+        .passcode-modal .btn-row .btn-cancel-code {
+            background:rgba(255,255,255,0.05);
+            color:rgba(255,255,255,0.5);
+            border:1px solid rgba(255,255,255,0.06);
+        }
+        .passcode-modal .btn-row .btn-cancel-code:hover { background:rgba(255,255,255,0.08); }
+        .passcode-modal .error-msg { color:#ff4757; font-size:0.8rem; margin-top:10px; min-height:20px; }
+
+        /* ===== PAGE CONTAINERS ===== */
+        .page { display:none; padding:20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+        .page.active { display:block; animation:fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ===== HERO ===== */
+        .hero {
+            position:relative;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:60px 20px;
+            overflow:hidden;
+            background:#0a0a1a;
+        }
+        .hero-background {
+            position:absolute;
+            inset:-50px;
+            background:radial-gradient(ellipse at 20% 50%, rgba(251,191,36,0.08) 0%, transparent 60%),
+                       radial-gradient(ellipse at 80% 50%, rgba(59,130,246,0.06) 0%, transparent 60%),
+                       url('https://images.pexels.com/photos/248547/pexels-photo-248547.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+            z-index:0;
+            animation:zoomBackground 25s infinite alternate ease-in-out;
+            filter:brightness(0.6) saturate(1.2);
+        }
+        @keyframes zoomBackground { 0%{transform:scale(1);} 100%{transform:scale(1.08);} }
+        .light-ray {
+            position:absolute;
+            border-radius:50%;
+            filter:blur(120px);
+            opacity:0.15;
+            animation:lightPulse 8s infinite alternate ease-in-out;
+            z-index:0;
+        }
+        .light-ray-1 { width:600px; height:600px; top:-200px; right:-100px; background:radial-gradient(circle,rgba(251,191,36,0.3),transparent 70%); animation-delay:0s; }
+        .light-ray-2 { width:500px; height:500px; bottom:-150px; left:-100px; background:radial-gradient(circle,rgba(99,102,241,0.2),transparent 70%); animation-delay:2s; }
+        .light-ray-3 { width:400px; height:400px; top:30%; left:40%; background:radial-gradient(circle,rgba(236,72,153,0.15),transparent 70%); animation-delay:4s; }
+        @keyframes lightPulse { 0%{opacity:0.05; transform:scale(0.8);} 100%{opacity:0.2; transform:scale(1.2);} }
+        .watermark {
+            position:absolute;
+            top:50%; left:50%;
+            transform:translate(-50%,-50%) rotate(-6deg);
+            font-family:'Playfair Display',serif;
+            font-size:clamp(5rem,18vw,11rem);
+            font-weight:900;
+            color:rgba(255,255,255,0.025);
+            white-space:nowrap;
+            letter-spacing:0.2em;
+            pointer-events:none;
+            z-index:0;
+            user-select:none;
+        }
+        .hero-content {
+            position:relative;
+            z-index:2;
+            text-align:center;
+            max-width:1050px;
+            backdrop-filter:blur(2px);
+            padding:30px;
+            border-radius:40px;
+            background:rgba(10,10,26,0.3);
+            border:1px solid rgba(255,255,255,0.03);
+        }
+        .hero-badge {
+            display:inline-block;
+            background:rgba(251,191,36,0.12);
+            color:#FBBF24;
+            padding:8px 28px;
+            border-radius:50px;
+            font-size:0.7rem;
+            font-weight:600;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            margin-bottom:24px;
+            border:1px solid rgba(251,191,36,0.15);
+            backdrop-filter:blur(8px);
+        }
+        .hero h1 {
+            font-family:'Playfair Display',serif;
+            font-size:clamp(3rem,10vw,5.2rem);
+            font-weight:900;
+            margin-bottom:20px;
+            line-height:1.08;
+            text-shadow:0 4px 40px rgba(0,0,0,0.4);
+        }
+        .hero h1 .highlight {
+            background:linear-gradient(135deg,#FBBF24,#F59E0B,#FBBF24);
+            background-size:200% 200%;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;
+            animation:shimmerGradient 4s ease-in-out infinite;
+        }
+        @keyframes shimmerGradient { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+        .hero p {
+            font-size:1.2rem;
+            color:rgba(255,255,255,0.8);
+            margin-bottom:40px;
+            line-height:1.9;
+            max-width:700px;
+            margin-left:auto;
+            margin-right:auto;
+            text-shadow:0 2px 20px rgba(0,0,0,0.3);
+        }
+        .hero-stats {
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            margin:30px 0 48px;
+            flex-wrap:wrap;
+        }
+        .hero-stats .stat {
+            text-align:center;
+            padding:18px 28px;
+            background:rgba(255,255,255,0.04);
+            border-radius:16px;
+            border:1px solid rgba(255,255,255,0.06);
+            backdrop-filter:blur(12px);
+            transition:all 0.4s ease;
+            min-width:130px;
+        }
+        .hero-stats .stat:hover { background:rgba(255,255,255,0.08); border-color:rgba(251,191,36,0.2); transform:translateY(-4px); box-shadow:0 12px 30px rgba(0,0,0,0.3); }
+        .hero-stats .stat .number { font-size:2.6rem; font-weight:800; color:#FBBF24; display:block; }
+        .hero-stats .stat .label { font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
+        .cta-group { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+        .cta-primary, .cta-secondary {
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            padding:16px 40px;
+            border-radius:50px;
+            font-weight:700;
+            font-size:1rem;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            text-decoration:none;
+            backdrop-filter:blur(8px);
+        }
+        .cta-primary {
+            background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            color:#0a0a1a;
+            box-shadow:0 8px 40px rgba(251,191,36,0.25);
+        }
+        .cta-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 12px 50px rgba(251,191,36,0.35); }
+        .cta-secondary {
+            background:rgba(255,255,255,0.05);
+            color:#fff;
+            border:1.5px solid rgba(255,255,255,0.1);
+        }
+        .cta-secondary:hover { background:rgba(255,255,255,0.1); border-color:#FBBF24; transform:translateY(-3px); }
+
+        /* ===== SPORT SELECTION ===== */
+        .sport-section {
+            padding:70px 20px 50px;
+            background:linear-gradient(180deg, rgba(10,10,26,0.95) 0%, rgba(18,16,42,0.9) 100%);
+            text-align:center;
+            border-top:1px solid rgba(255,215,0,0.04);
+            position:relative;
+        }
+        .sport-section::before {
+            content:'';
+            position:absolute;
+            top:0; left:0; right:0; bottom:0;
+            background:radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.03), transparent 70%);
+            pointer-events:none;
+        }
+        .sport-section .section-tag {
+            display:inline-block;
+            background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            color:#0a0a1a;
+            padding:6px 28px;
+            border-radius:50px;
+            font-size:0.7rem;
+            font-weight:700;
+            text-transform:uppercase;
+            letter-spacing:3px;
+            margin-bottom:12px;
+        }
+        .sport-section h2 { font-family:'Playfair Display',serif; font-size:2.8rem; margin-bottom:10px; }
+        .sport-section h2 span { background:linear-gradient(135deg,#FBBF24,#F59E0B); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .sport-section .sub { color:rgba(255,255,255,0.4); font-size:1rem; max-width:600px; margin:0 auto 40px; }
+
+        .sport-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+            gap:20px;
+            max-width:1100px;
+            margin:0 auto;
+        }
+        .sport-card {
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:20px;
+            padding:28px 12px 24px;
+            transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
+            cursor:pointer;
+            backdrop-filter:blur(8px);
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .sport-card::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at 50% 50%, rgba(251,191,36,0.06), transparent 70%);
+            opacity:0;
+            transition:opacity 0.4s;
+        }
+        .sport-card:hover { transform:translateY(-8px); border-color:rgba(251,191,36,0.25); background:rgba(255,255,255,0.06); box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+        .sport-card:hover::before { opacity:1; }
+        .sport-card .sport-icon { font-size:3rem; display:block; margin-bottom:8px; }
+        .sport-card .sport-name { font-weight:700; font-size:0.9rem; color:#fff; }
+        .sport-card .sport-count { font-size:0.65rem; color:rgba(255,255,255,0.25); margin-top:4px; }
+        .sport-card.active-sport { border-color:#FBBF24; background:rgba(251,191,36,0.08); box-shadow:0 0 30px rgba(251,191,36,0.05); }
+
+        /* ===== EVENTS CALENDAR ===== */
+        .calendar-section {
+            background:linear-gradient(135deg, rgba(10,10,26,0.95) 0%, rgba(26,16,64,0.9) 50%, rgba(10,10,26,0.95) 100%);
+            padding:60px 20px 70px;
+            border-top:1px solid rgba(255,215,0,0.04);
+            position:relative;
+        }
+        .calendar-section .content { max-width:1200px; margin:0 auto; }
+        .calendar-section .top-bar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:30px; gap:16px; }
+        .calendar-section .top-bar h2 { font-family:'Playfair Display',serif; font-size:2.2rem; }
+        .calendar-section .top-bar h2 span { background:linear-gradient(135deg,#FBBF24,#F59E0B); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .calendar-section .top-bar .filter-label { font-size:0.75rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px; }
+        .calendar-section .top-bar .filter-label strong { color:#FBBF24; font-weight:600; }
+        .calendar-grid {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+            gap:20px;
+            max-height:650px;
+            overflow-y:auto;
+            padding-right:8px;
+        }
+        .calendar-grid::-webkit-scrollbar { width:4px; }
+        .calendar-grid::-webkit-scrollbar-track { background:rgba(255,255,255,0.02); border-radius:10px; }
+        .calendar-grid::-webkit-scrollbar-thumb { background:#FBBF24; border-radius:10px; }
+        .calendar-item {
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:16px;
+            padding:18px 20px 20px;
+            transition:all 0.3s ease;
+            backdrop-filter:blur(8px);
+            cursor:pointer;
+            position:relative;
+            overflow:hidden;
+        }
+        .calendar-item::before {
+            content:'';
+            position:absolute;
+            top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg,#FBBF24,#F59E0B);
+            opacity:0;
+            transition:opacity 0.4s;
+        }
+        .calendar-item:hover {
+            background:rgba(255,255,255,0.06);
+            border-color:rgba(251,191,36,0.2);
+            transform:translateY(-4px);
+            box-shadow:0 12px 30px rgba(0,0,0,0.3);
+        }
+        .calendar-item:hover::before { opacity:1; }
+        .calendar-item .cal-date { display:inline-block; background:rgba(251,191,36,0.1); color:#FBBF24; padding:2px 14px; border-radius:20px; font-size:0.7rem; font-weight:600; margin-bottom:6px; }
+        .calendar-item .cal-name { font-weight:700; font-size:1rem; color:#fff; margin-bottom:2px; }
+        .calendar-item .cal-location { font-size:0.75rem; color:rgba(255,255,255,0.4); display:flex; align-items:center; gap:6px; }
+        .calendar-item .cal-location::before { content:'📍'; font-size:0.8rem; }
+        .calendar-item .cal-organizer { display:inline-block; margin-top:5px; padding:2px 12px; border-radius:20px; font-size:0.6rem; font-weight:600; text-transform:uppercase; background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.04); }
+        .calendar-item .cal-desc { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4; }
+        .calendar-item .click-hint { display:none; margin-top:6px; font-size:0.55rem; color:rgba(255,255,255,0.15); }
+        .calendar-item:hover .click-hint { display:block; }
+        .no-events { color:rgba(255,255,255,0.3); text-align:center; padding:50px 0; font-size:1.1rem; }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.8);
+            backdrop-filter:blur(12px);
+            z-index:999;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            opacity:0;
+            visibility:hidden;
+            transition:all 0.3s ease;
+            padding:20px;
+        }
+        .modal-overlay.active { opacity:1; visibility:visible; }
+        .modal-card {
+            background:linear-gradient(145deg, #1a1a2e, #2a2a4a);
+            border:1px solid rgba(255,215,0,0.12);
+            border-radius:32px;
+            max-width:540px;
+            width:100%;
+            padding:36px 32px 32px;
+            box-shadow:0 40px 80px rgba(0,0,0,0.6);
+            transform:scale(0.95) translateY(20px);
+            transition:all 0.3s ease;
+            max-height:92vh;
+            overflow-y:auto;
+            position:relative;
+        }
+        .modal-overlay.active .modal-card { transform:scale(1) translateY(0); }
+        .modal-card .close-modal {
+            position:absolute;
+            top:16px; right:20px;
+            background:none; border:none;
+            color:rgba(255,255,255,0.3);
+            font-size:1.8rem;
+            cursor:pointer;
+            transition:color 0.3s;
+        }
+        .modal-card .close-modal:hover { color:#FBBF24; }
+        .modal-card h3 { font-family:'Playfair Display',serif; font-size:1.8rem; color:#FBBF24; margin-bottom:4px; }
+        .modal-card .modal-sub { color:rgba(255,255,255,0.4); font-size:0.9rem; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:12px; }
+        .modal-card .modal-detail { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+        .modal-card .modal-detail .detail-row { display:flex; justify-content:space-between; font-size:0.9rem; color:rgba(255,255,255,0.7); }
+        .modal-card .modal-detail .detail-row strong { color:#fff; font-weight:500; }
+        .modal-card .modal-description { background:rgba(255,255,255,0.03); border-radius:12px; padding:14px 16px; margin:8px 0 12px; border-left:3px solid rgba(251,191,36,0.4); }
+        .modal-card .modal-description h4 { color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .modal-card .modal-description p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; }
+        .modal-card .modal-sponsorship { background:rgba(251,191,36,0.05); border-radius:12px; padding:14px 16px; margin:8px 0 12px; border-left:3px solid #FBBF24; }
+        .modal-card .modal-sponsorship h4 { color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .modal-card .modal-sponsorship p { color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6; }
+        .modal-card .modal-requirements { background:rgba(255,215,0,0.05); border-radius:12px; padding:14px 18px; margin:8px 0 20px; border-left:3px solid #FBBF24; }
+        .modal-card .modal-requirements h4 { color:#FBBF24; font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+        .modal-card .modal-requirements ul { list-style:none; padding:0; font-size:0.85rem; color:rgba(255,255,255,0.75); }
+        .modal-card .modal-requirements ul li { padding:3px 0; padding-left:20px; position:relative; }
+        .modal-card .modal-requirements ul li::before { content:'▹'; position:absolute; left:0; color:#FBBF24; }
+        .modal-card .btn-apply-modal {
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            width:100%;
+            padding:15px;
+            background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            border:none;
+            border-radius:50px;
+            font-weight:700;
+            font-size:1.05rem;
+            color:#0a0a1a;
+            cursor:pointer;
+            transition:all 0.3s;
+            box-shadow:0 4px 20px rgba(251,191,36,0.2);
+        }
+        .modal-card .btn-apply-modal:hover { transform:scale(1.02); box-shadow:0 8px 35px rgba(251,191,36,0.35); }
+
+        /* ===== APPLICATION FORM (Page 2) ===== */
+        .apply-section {
+            background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:28px;
+            padding:36px 36px 40px;
+            backdrop-filter:blur(6px);
+            margin-top:30px;
+            box-shadow:0 20px 40px rgba(0,0,0,0.2);
+        }
+        .apply-section h2 { font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; margin-bottom:6px; }
+        .apply-section h2 span { color:#FBBF24; }
+        .apply-section .form-sub { color:rgba(255,255,255,0.4); margin-bottom:28px; font-size:0.95rem; }
+        .form-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px 28px;
+        }
+        .form-group { display:flex; flex-direction:column; gap:4px; }
+        .form-group.full { grid-column:1/-1; }
+        .form-group label { font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); }
+        .form-group input, .form-group select {
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px;
+            padding:14px 18px;
+            color:#fff;
+            font-family:'Inter',sans-serif;
+            font-size:0.95rem;
+            transition:all 0.3s ease;
+            outline:none;
+            width:100%;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color:#FBBF24;
+            background:rgba(255,255,255,0.06);
+            box-shadow:0 0 0 3px rgba(251,191,36,0.05);
+        }
+        .form-group input::placeholder { color:rgba(255,255,255,0.2); }
+        .form-group select option { background:#1a1a2e; color:#fff; }
+        .file-input-wrapper {
+            position:relative;
+            overflow:hidden;
+            display:inline-block;
+            width:100%;
+        }
+        .file-input-wrapper input[type="file"] {
+            position:absolute;
+            left:0; top:0;
+            opacity:0;
+            width:100%;
+            height:100%;
+            cursor:pointer;
+        }
+        .file-input-wrapper .file-label {
+            display:flex;
+            align-items:center;
+            gap:10px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px;
+            padding:14px 18px;
+            color:rgba(255,255,255,0.5);
+            font-size:0.9rem;
+            transition:all 0.3s ease;
+            width:100%;
+        }
+        .file-input-wrapper .file-label:hover { border-color:rgba(251,191,36,0.3); background:rgba(255,255,255,0.06); }
+        .file-input-wrapper .file-label .file-icon { font-size:1.2rem; }
+        .file-input-wrapper .file-label .file-name { color:#fff; font-weight:500; margin-left:auto; font-size:0.8rem; }
+        .btn-submit {
+            grid-column:1/-1;
+            padding:18px 40px;
+            background:linear-gradient(135deg,#FBBF24,#F59E0B);
+            border:none;
+            border-radius:50px;
+            font-weight:700;
+            font-size:1.1rem;
+            color:#0a0a1a;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            box-shadow:0 4px 25px rgba(251,191,36,0.15);
+            margin-top:8px;
+            width:100%;
+            max-width:400px;
+            justify-self:center;
+        }
+        .btn-submit:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(251,191,36,0.25); }
+        .btn-submit:active { transform:scale(0.97); }
+
+        /* ===== CONFIRMATION (Page 3) ===== */
+        .confirmation-card {
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(46,213,115,0.15);
+            border-radius:28px;
+            padding:40px 40px 36px;
+            backdrop-filter:blur(12px);
+            box-shadow:0 20px 60px rgba(0,0,0,0.4);
+            text-align:center;
+            margin-bottom:32px;
+        }
+        .confirmation-card .checkmark { font-size:4rem; display:block; margin-bottom:12px; }
+        .confirmation-card h2 { font-family:'Playfair Display',serif; font-size:2.2rem; color:#2ed573; margin-bottom:8px; }
+        .confirmation-card p { color:rgba(255,255,255,0.6); font-size:1rem; max-width:500px; margin:0 auto; }
+
+        .payment-section-page3 {
+            background:rgba(255,215,0,0.04);
+            border:1px solid rgba(255,215,0,0.1);
+            border-radius:24px;
+            padding:32px 36px 36px;
+            backdrop-filter:blur(8px);
+            margin-bottom:32px;
+        }
+        .payment-section-page3 .payment-header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:16px;
+            margin-bottom:20px;
+        }
+        .payment-section-page3 .payment-header h3 { font-family:'Playfair Display',serif; font-size:1.6rem; color:#FBBF24; }
+        .payment-section-page3 .payment-header .total-fee {
+            font-size:2rem;
+            font-weight:800;
+            color:#fff;
+            background:rgba(251,191,36,0.1);
+            padding:6px 28px;
+            border-radius:50px;
+            border:1px solid rgba(251,191,36,0.15);
+        }
+        .payment-details-page3 {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px 32px;
+            margin-bottom:20px;
+        }
+        .payment-details-page3 .pay-item {
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+            padding:8px 0;
+            border-bottom:1px solid rgba(255,255,255,0.04);
+        }
+        .payment-details-page3 .pay-item .label { font-size:0.6rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.3); }
+        .payment-details-page3 .pay-item .value { font-size:0.95rem; font-weight:500; color:#fff; }
+        .payment-details-page3 .pay-item.full { grid-column:1/-1; }
+
+        .payment-options-page3 {
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+            gap:12px;
+            margin:16px 0 20px;
+        }
+        .payment-option-page3 {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:14px;
+            padding:14px 18px;
+            cursor:pointer;
+            transition:all 0.3s ease;
+        }
+        .payment-option-page3:hover { background:rgba(255,255,255,0.06); border-color:rgba(251,191,36,0.2); }
+        .payment-option-page3.selected { border-color:#FBBF24; background:rgba(251,191,36,0.06); box-shadow:0 0 20px rgba(251,191,36,0.05); }
+        .payment-option-page3 input[type="radio"] { accent-color:#FBBF24; width:18px; height:18px; cursor:pointer; flex-shrink:0; }
+        .payment-option-page3 .pay-details .pay-name { font-weight:600; font-size:0.9rem; color:#fff; }
+        .payment-option-page3 .pay-details .pay-desc { font-size:0.7rem; color:rgba(255,255,255,0.3); }
+        .payment-option-page3.disabled { opacity:0.5; cursor:default; }
+
+        .payment-instructions-box {
+            background:rgba(255,255,255,0.03);
+            border-radius:16px;
+            padding:20px 24px;
+            border-left:3px solid #FBBF24;
+            margin:20px 0;
+        }
+        .payment-instructions-box h4 { color:#FBBF24; font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
+        .payment-instructions-box .pay-method { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .payment-instructions-box .pay-method:last-child { border-bottom:none; }
+        .payment-instructions-box .pay-method .pay-icon { font-size:1.6rem; width:40px; text-align:center; }
+        .payment-instructions-box .pay-method .pay-info .pay-name { font-weight:600; color:#fff; font-size:0.95rem; }
+        .payment-instructions-box .pay-method .pay-info .pay-detail { font-size:0.85rem; color:rgba(255,255,255,0.6); }
+        .payment-instructions-box .pay-method .pay-info .pay-detail strong { color:#FBBF24; }
+
+        .payment-note {
+            margin-top:16px;
+            padding:16px 20px;
+            background:rgba(46,213,115,0.04);
+            border-radius:14px;
+            border:1px solid rgba(46,213,115,0.08);
+            display:flex;
+            align-items:flex-start;
+            gap:14px;
+        }
+        .payment-note .note-icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
+        .payment-note .note-content { font-size:0.9rem; color:rgba(255,255,255,0.6); line-height:1.7; }
+        .payment-note .note-content strong { color:#FBBF24; }
+        .payment-note .note-content .highlight-text { color:#2ed573; font-weight:500; }
+
+        .summary-section-page3 {
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:24px;
+            padding:32px 36px 36px;
+            backdrop-filter:blur(8px);
+            margin-bottom:32px;
+        }
+        .summary-section-page3 h3 { font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:20px; }
+        .summary-section-page3 h3 span { color:#FBBF24; }
+        .summary-grid-page3 {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:16px 32px;
+        }
+        .summary-item-page3 {
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+            padding:8px 0;
+            border-bottom:1px solid rgba(255,255,255,0.04);
+        }
+        .summary-item-page3 .label { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.5px; color:rgba(255,255,255,0.3); }
+        .summary-item-page3 .value { font-size:0.95rem; font-weight:500; color:#fff; }
+        .summary-item-page3.full { grid-column:1/-1; }
+
+        .next-steps-page3 {
+            background:rgba(255,215,0,0.03);
+            border:1px solid rgba(255,215,0,0.08);
+            border-radius:20px;
+            padding:28px 32px;
+            margin-bottom:32px;
+            backdrop-filter:blur(4px);
+        }
+        .next-steps-page3 h4 { color:#FBBF24; font-size:0.85rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px; }
+        .next-steps-page3 ul { list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; }
+        .next-steps-page3 ul li { display:flex; align-items:center; gap:10px; font-size:0.9rem; color:rgba(255,255,255,0.7); padding:4px 0; }
+        .next-steps-page3 ul li .step-num { display:inline-flex; align-items:center; justify-content:center; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.15); border-radius:50%; width:28px; height:28px; font-size:0.7rem; font-weight:700; color:#FBBF24; flex-shrink:0; }
+
+        .btn-group { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:20px; }
+        .btn-primary { display:inline-flex; align-items:center; gap:10px; padding:16px 40px; background:linear-gradient(135deg,#FBBF24,#F59E0B); border:none; border-radius:50px; font-weight:700; font-size:1rem; color:#0a0a1a; cursor:pointer; transition:all 0.3s ease; text-decoration:none; box-shadow:0 4px 25px rgba(251,191,36,0.15); }
+        .btn-primary:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(251,191,36,0.25); }
+        .btn-secondary { display:inline-flex; align-items:center; gap:10px; padding:16px 40px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:50px; font-weight:600; font-size:1rem; color:#fff; cursor:pointer; transition:all 0.3s ease; text-decoration:none; }
+        .btn-secondary:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,215,0,0.2); }
+        .btn-success { display:inline-flex; align-items:center; gap:10px; padding:16px 40px; background:linear-gradient(135deg,#2ed573,#26de81); border:none; border-radius:50px; font-weight:700; font-size:1rem; color:#0a0a1a; cursor:pointer; transition:all 0.3s ease; text-decoration:none; box-shadow:0 4px 25px rgba(46,213,115,0.15); }
+        .btn-success:hover { transform:scale(1.02); box-shadow:0 8px 40px rgba(46,213,115,0.25); }
+
+        .back-link { display:inline-flex; align-items:center; gap:8px; color:rgba(255,255,255,0.3); text-decoration:none; font-size:0.85rem; transition:color 0.3s; margin-bottom:20px; }
+        .back-link:hover { color:#FBBF24; }
+
+        /* ===== SELECTION DROPDOWNS ON PAGE 2 ===== */
+        .selector-group { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:30px; }
+        .selector-group .selector-item { flex:1; min-width:200px; }
+        .selector-group .selector-item label { font-size:0.7rem; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.4); display:block; margin-bottom:4px; }
+        .selector-group .selector-item select {
+            width:100%;
+            padding:12px 16px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px;
+            color:#fff;
+            font-family:'Inter',sans-serif;
+            font-size:0.95rem;
+            outline:none;
+            transition:all 0.3s ease;
+        }
+        .selector-group .selector-item select:focus { border-color:#FBBF24; background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px rgba(251,191,36,0.05); }
+        .selector-group .selector-item select option { background:#1a1a2e; color:#fff; }
+
+        /* ===== ADMIN DASHBOARD (Page 4) ===== */
+        .admin-dashboard {
+            max-width:1200px;
+            margin:0 auto;
+            padding:20px;
+        }
+        .admin-dashboard .header {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:30px;
+            flex-wrap:wrap;
+            gap:16px;
+        }
+        .admin-dashboard .header h1 {
+            font-family:'Playfair Display',serif;
+            font-size:2.2rem;
+            color:#FBBF24;
+        }
+        .admin-dashboard .header .stats {
+            display:flex;
+            gap:20px;
+        }
+        .admin-dashboard .header .stats .stat-box {
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:12px;
+            padding:12px 24px;
+            text-align:center;
+            min-width:100px;
+        }
+        .admin-dashboard .header .stats .stat-box .num {
+            font-size:1.8rem;
+            font-weight:800;
+            color:#FBBF24;
+        }
+        .admin-dashboard .header .stats .stat-box .lbl {
+            font-size:0.6rem;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            color:rgba(255,255,255,0.3);
+        }
+        .admin-table-wrap {
+            background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:20px;
+            overflow:hidden;
+            backdrop-filter:blur(6px);
+            overflow-x:auto;
+        }
+        .admin-table {
+            width:100%;
+            border-collapse:collapse;
+            font-size:0.85rem;
+            min-width:900px;
+        }
+        .admin-table th {
+            background:rgba(251,191,36,0.04);
+            color:rgba(255,255,255,0.5);
+            font-weight:600;
+            text-transform:uppercase;
+            font-size:0.65rem;
+            letter-spacing:1px;
+            padding:14px 18px;
+            text-align:left;
+            border-bottom:1px solid rgba(255,255,255,0.04);
+        }
+        .admin-table td {
+            padding:12px 18px;
+            border-bottom:1px solid rgba(255,255,255,0.03);
+            color:rgba(255,255,255,0.8);
+            vertical-align:middle;
+        }
+        .admin-table tr:hover td { background:rgba(255,255,255,0.02); }
+        .admin-table .status {
+            display:inline-block;
+            padding:2px 12px;
+            border-radius:20px;
+            font-size:0.6rem;
+            font-weight:600;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+        }
+        .admin-table .status.pending { background:rgba(251,191,36,0.1); color:#FBBF24; border:1px solid rgba(251,191,36,0.1); }
+        .admin-table .status.approved { background:rgba(46,213,115,0.1); color:#2ed573; border:1px solid rgba(46,213,115,0.1); }
+        .admin-table .status.rejected { background:rgba(255,71,87,0.1); color:#ff4757; border:1px solid rgba(255,71,87,0.1); }
+        .admin-table .no-apps {
+            text-align:center;
+            padding:50px 20px;
+            color:rgba(255,255,255,0.2);
+            font-size:1rem;
+        }
+        .admin-table .view-btn {
+            background:rgba(251,191,36,0.08);
+            border:1px solid rgba(251,191,36,0.1);
+            border-radius:6px;
+            color:#FBBF24;
+            padding:4px 12px;
+            font-size:0.7rem;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            font-weight:500;
+        }
+        .admin-table .view-btn:hover { background:rgba(251,191,36,0.15); }
+        .admin-table .delete-btn {
+            background:rgba(255,71,87,0.08);
+            border:1px solid rgba(255,71,87,0.1);
+            border-radius:6px;
+            color:#ff4757;
+            padding:4px 12px;
+            font-size:0.7rem;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            font-weight:500;
+        }
+        .admin-table .delete-btn:hover { background:rgba(255,71,87,0.15); }
+        .admin-table .approve-btn {
+            background:rgba(46,213,115,0.08);
+            border:1px solid rgba(46,213,115,0.1);
+            border-radius:6px;
+            color:#2ed573;
+            padding:4px 12px;
+            font-size:0.7rem;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            font-weight:500;
+        }
+        .admin-table .approve-btn:hover { background:rgba(46,213,115,0.15); }
+        .admin-table .action-group { display:flex; gap:4px; flex-wrap:wrap; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:768px) {
+            .sport-grid { grid-template-columns:repeat(3,1fr); gap:14px; }
+            .sport-card { padding:20px 8px; }
+            .sport-card .sport-icon { font-size:2.2rem; }
+            .calendar-grid { grid-template-columns:1fr; max-height:450px; }
+            .form-grid { grid-template-columns:1fr; }
+            .btn-submit { max-width:100%; }
+            .payment-details-page3 { grid-template-columns:1fr; }
+            .payment-options-page3 { grid-template-columns:1fr 1fr; }
+            .summary-grid-page3 { grid-template-columns:1fr; }
+            .confirmation-card { padding:30px 20px 28px; }
+            .payment-instructions-box { padding:16px; }
+            .next-steps-page3 ul { grid-template-columns:1fr; }
+            .hero-content { padding:20px; }
+            .selector-group { flex-direction:column; }
+            .admin-dashboard .header { flex-direction:column; align-items:stretch; }
+            .admin-dashboard .header .stats { flex-wrap:wrap; }
+            .admin-btn { width:34px; height:34px; font-size:15px; top:12px; right:12px; }
+            .passcode-modal { padding:28px 20px 24px; }
+            .admin-table { min-width:600px; }
+        }
+        @media (max-width:480px) {
+            .sport-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+            .sport-card { padding:16px 6px; }
+            .sport-card .sport-icon { font-size:1.8rem; }
+            .payment-options-page3 { grid-template-columns:1fr; }
+            .payment-section-page3 { padding:18px; }
+            .summary-section-page3 { padding:18px; }
+            .payment-note { flex-direction:column; }
+            .admin-btn { width:30px; height:30px; font-size:13px; top:10px; right:10px; }
+            .admin-table { min-width:500px; font-size:0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ADMIN BUTTON ===== -->
+    <div class="admin-btn" onclick="showPasscodeModal()" title="Admin Access">
+        <span class="gear-icon">⚙️</span>
+        <span class="tooltip">Admin</span>
+    </div>
+
+    <!-- ===== PASSCODE MODAL ===== -->
+    <div class="passcode-overlay" id="passcodeOverlay">
+        <div class="passcode-modal">
+            <span class="lock-icon">🔐</span>
+            <h3>Sponsor Verification</h3>
+            <p>Please enter your sponsor ID to access the admin panel.</p>
+            <div class="input-group">
+                <input type="password" id="passcodeInput" placeholder="Enter sponsor ID" autofocus>
+                <div class="btn-row">
+                    <button class="btn-cancel-code" onclick="closePasscodeModal()">Cancel</button>
+                    <button class="btn-submit-code" onclick="verifyPasscode()">Unlock</button>
+                </div>
+                <div class="error-msg" id="passcodeError"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 1: WELCOME + SPORT SELECTION + EVENTS                     -->
+    <!-- ============================================================ -->
+    <div id="page1" class="page active">
+        <section class="hero">
+            <div class="hero-background"></div>
+            <div class="light-ray light-ray-1"></div>
+            <div class="light-ray light-ray-2"></div>
+            <div class="light-ray light-ray-3"></div>
+            <div class="watermark">SPORTS SPONSORSHIP</div>
+            <div class="hero-content">
+                <div class="hero-badge">🏆 2026/27 Sponsorship Program</div>
+                <h1>Get Sponsored in<br><span class="highlight">Your Sport</span></h1>
+                <p>Kenya's premier sports sponsorship platform connects athletes with leading brands. Whether you're a runner, footballer, or swimmer, we help you secure funding, showcase your talent, and compete on the global stage. <strong>Select your sport below</strong> to explore events and apply for sponsorship.</p>
+                <div class="hero-stats">
+                    <div class="stat"><span class="number">10+</span><span class="label">Sports</span></div>
+                    <div class="stat"><span class="number">1,200+</span><span class="label">Athletes Sponsored</span></div>
+                    <div class="stat"><span class="number">Ksh. 50M+</span><span class="label">Total Sponsorship</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sport-section" id="sportSelection">
+            <div class="section-tag">Step 1: Choose Your Sport</div>
+            <h2>Select <span>Your Discipline</span></h2>
+            <p class="sub">Tap on your sport to unlock all upcoming events and sponsorship opportunities</p>
+            <div class="sport-grid" id="sportGrid"></div>
+        </section>
+
+        <section class="calendar-section" id="calendarSection">
+            <div class="content">
+                <div class="top-bar">
+                    <h2>📅 <span id="calendarTitle">All Events</span></h2>
+                    <div class="filter-label">Showing: <strong id="currentSportLabel">All Sports</strong></div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 2: APPLICATION FORM                                      -->
+    <!-- ============================================================ -->
+    <div id="page2" class="page">
+        <div style="max-width:1000px; margin:0 auto; padding:20px 0;">
+            <a href="#" class="back-link" onclick="goToPage('page1'); return false;">← Back to events</a>
+
+            <div id="selectionArea"></div>
+            <div id="eventDetailWrapper" style="display:none;">
+                <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,215,0,0.08); border-radius:28px; padding:36px 36px 32px; margin-bottom:40px; backdrop-filter:blur(6px); box-shadow:0 20px 60px rgba(0,0,0,0.3); position:relative; overflow:hidden;">
+                    <div style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#FBBF24,#F59E0B,#FBBF24); background-size:200% 100%; animation:shimmerBar 4s ease-in-out infinite;"></div>
+                    <style>@keyframes shimmerBar { 0%,100%{background-position:0% 0%;} 50%{background-position:100% 0%;} }</style>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+                        <div style="font-family:'Playfair Display',serif; font-size:2rem; font-weight:800; color:#fff; line-height:1.2;" id="detailTitle">Event <span style="color:#FBBF24;">Name</span></div>
+                        <span style="font-size:1.2rem; background:rgba(255,215,0,0.08); padding:4px 20px; border-radius:50px; color:#FBBF24; border:1px solid rgba(255,215,0,0.1);" id="detailOrganizer">Organizer</span>
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; gap:20px 36px; margin:12px 0 16px;">
+                        <div style="display:flex; align-items:center; gap:8px; font-size:0.9rem; color:rgba(255,255,255,0.6);"><span style="font-size:1.2rem;">📅</span> <strong style="color:#fff;">Date:</strong> <span id="detailDate">—</span></div>
+                        <div style="display:flex; align-items:center; gap:8px; font-size:0.9rem; color:rgba(255,255,255,0.6);"><span style="font-size:1.2rem;">📍</span> <strong style="color:#fff;">Location:</strong> <span id="detailLocation">—</span></div>
+                        <div style="display:flex; align-items:center; gap:8px; font-size:0.9rem; color:rgba(255,255,255,0.6);"><span style="font-size:1.2rem;">🏷️</span> <strong style="color:#fff;">Sport:</strong> <span id="detailSport">—</span></div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:30px; margin-top:16px;">
+                        <div><p style="color:rgba(255,255,255,0.7); font-size:0.95rem; line-height:1.8;" id="detailDescription">Event description</p></div>
+                        <div style="background:rgba(255,215,0,0.03); border-radius:16px; padding:20px 22px; border:1px solid rgba(255,215,0,0.06);">
+                            <h4 style="color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:8px;">📋 Requirements</h4>
+                            <ul id="detailRequirements" style="list-style:none; padding:0;"></ul>
+                        </div>
+                    </div>
+                    <div style="margin-top:24px; background:rgba(251,191,36,0.04); border-radius:16px; padding:18px 22px; border-left:3px solid #FBBF24;">
+                        <h4 style="color:#FBBF24; font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:4px;">💰 Sponsorship Information</h4>
+                        <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;" id="detailSponsorship">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="apply-section">
+                <h2>Apply for <span>Sponsorship</span></h2>
+                <p class="form-sub">Fill in your details below. Our team will review your application and get back to you within 48 hours.</p>
+                <form id="applicationForm" onsubmit="submitApplication(event)">
+                    <div class="form-grid">
+                        <div class="form-group"><label for="fullName">Full Name *</label><input type="text" id="fullName" placeholder="e.g. Jane Muthoni" required /></div>
+                        <div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" placeholder="jane@example.com" required /></div>
+                        <div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone" placeholder="+254 7XX XXX XXX" required /></div>
+                        <div class="form-group"><label for="dob">Date of Birth *</label><input type="date" id="dob" required /></div>
+                        <div class="form-group"><label for="nationality">Nationality *</label><input type="text" id="nationality" placeholder="e.g. Kenyan" required /></div>
+                        <div class="form-group"><label for="county">County *</label><input type="text" id="county" placeholder="e.g. Nairobi" required /></div>
+                        <div class="form-group"><label for="gender">Gender</label><select id="gender"><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option><option value="Prefer not to say">Prefer not to say</option></select></div>
+                        <div class="form-group"><label for="experience">Experience Level *</label><select id="experience" required><option value="">Select your level</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option><option value="Elite">Elite / Professional</option></select></div>
+                        <div class="form-group"><label for="passportPhoto">Passport Photo *</label><div class="file-input-wrapper"><input type="file" id="passportPhoto" accept="image/*" required /><div class="file-label"><span class="file-icon">📸</span><span>Upload passport photo</span><span class="file-name" id="passportFileName">No file chosen</span></div></div></div>
+                        <div class="form-group"><label for="emergencyContact">Emergency Contact Name & Phone *</label><input type="text" id="emergencyContact" placeholder="e.g. John Doe - +254 712 345 678" required /></div>
+                        <div class="form-group"><label for="sponsorshipAmount">Desired Sponsorship Amount (Ksh) *</label><input type="number" id="sponsorshipAmount" placeholder="e.g. 50000" min="1000" step="1000" required /></div>
+                        <div class="form-group"><label for="teamSize">Team Size (if applicable)</label><input type="number" id="teamSize" placeholder="Number of team members" min="1" step="1" /></div>
+                        <button type="submit" class="btn-submit">✔ Submit Application</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 3: CONFIRMATION + PAYMENT                                -->
+    <!-- ============================================================ -->
+    <div id="page3" class="page">
+        <div style="max-width:1000px; margin:0 auto; padding:20px 0;">
+            <div class="confirmation-card">
+                <span class="checkmark">🎉</span>
+                <h2>Application Submitted!</h2>
+                <p>Thank you for applying for sponsorship. Our team will review your application and contact you within <strong style="color:#fff;">48 hours</strong> after payment confirmation.</p>
+            </div>
+
+            <div class="payment-section-page3" id="paymentSectionPage3">
+                <div class="payment-header">
+                    <h3>💳 Registration Fee</h3>
+                    <div class="total-fee" id="confirmFee">Ksh 1,500</div>
+                </div>
+                <div class="payment-details-page3">
+                    <div class="pay-item"><span class="label">Sport Type</span><span class="value" id="confirmSportType">Individual</span></div>
+                    <div class="pay-item"><span class="label">Fee Breakdown</span><span class="value" id="confirmBreakdown">Ksh 1,500 per person</span></div>
+                    <div class="pay-item full"><span class="label">Payment Status</span><span class="value" style="color:#FBBF24;">⏳ Awaiting Payment</span></div>
+                </div>
+
+                <div style="margin:16px 0 8px;">
+                    <p style="color:rgba(255,255,255,0.3); font-size:0.75rem; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px;">Select Payment Method</p>
+                    <div class="payment-options-page3" id="paymentOptionsPage3">
+                        <label class="payment-option-page3 selected"><input type="radio" name="paymentMethodPage3" value="Safaricom M-PESA" checked /><div class="pay-details"><span class="pay-name">📱 Safaricom M-PESA</span><span class="pay-desc">Active</span></div></label>
+                        <label class="payment-option-page3"><input type="radio" name="paymentMethodPage3" value="Airtel Money" /><div class="pay-details"><span class="pay-name">📲 Airtel Money</span><span class="pay-desc">Active</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="Card Payment" disabled /><div class="pay-details"><span class="pay-name">💳 Card Payment</span><span class="pay-desc">Coming soon</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="PayPal" disabled /><div class="pay-details"><span class="pay-name">🅿️ PayPal</span><span class="pay-desc">Coming soon</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="Bitcoin" disabled /><div class="pay-details"><span class="pay-name">₿ Bitcoin</span><span class="pay-desc">Coming soon</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="SendWave" disabled /><div class="pay-details"><span class="pay-name">🌊 SendWave</span><span class="pay-desc">Coming soon</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="Bybit" disabled /><div class="pay-details"><span class="pay-name">📊 Bybit</span><span class="pay-desc">Coming soon</span></div></label>
+                        <label class="payment-option-page3 disabled"><input type="radio" name="paymentMethodPage3" value="Western Union" disabled /><div class="pay-details"><span class="pay-name">💸 Western Union</span><span class="pay-desc">Coming soon</span></div></label>
+                    </div>
+                </div>
+
+                <div class="payment-instructions-box">
+                    <h4>📌 Payment Instructions</h4>
+                    <div class="pay-method"><span class="pay-icon">📱</span><div class="pay-info"><span class="pay-name">Safaricom M-PESA</span><span class="pay-detail">Pay <strong>Ksh <span id="mpesaAmount">1,500</span></strong> to our Official Registration for Sponsorship Account</span></div></div>
+                    <div class="pay-method"><span class="pay-icon">📲</span><div class="pay-info"><span class="pay-name">Airtel Money</span><span class="pay-detail">Pay <strong>Ksh <span id="airtelAmount">1,500</span></strong> to our Official Registration for Sponsorship Account</span></div></div>
+                </div>
+
+                <div class="payment-note">
+                    <span class="note-icon">📞</span>
+                    <div class="note-content">
+                        <strong>Payment Assistance:</strong> One of our dedicated support agents will reach out to you within <span class="highlight-text">60 minutes</span> to guide you through the registration fee payment process. They will provide you with all the necessary details and ensure a seamless transaction experience.
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-section-page3">
+                <h3>📋 Application <span>Summary</span></h3>
+                <div class="summary-grid-page3" id="confirmSummary"></div>
+            </div>
+
+            <div class="next-steps-page3">
+                <h4>📌 What happens next?</h4>
+                <ul>
+                    <li><span class="step-num">1</span> ✅ Application submitted</li>
+                    <li><span class="step-num">2</span> 📞 Agent calls within 1 hour</li>
+                    <li><span class="step-num">3</span> 💳 Complete registration payment</li>
+                    <li><span class="step-num">4</span> 📋 Team reviews your application</li>
+                    <li><span class="step-num">5</span> 🏆 Sponsorship offer (if shortlisted)</li>
+                </ul>
+            </div>
+
+            <div class="btn-group">
+                <a href="#" class="btn-primary" onclick="goToPage('page1'); return false;">🏠 Return to Home</a>
+                <a href="#" class="btn-secondary" onclick="goToPage('page1'); return false;">📅 Browse More Events</a>
+                <a href="#" class="btn-success" onclick="alert('📧 Please send your payment confirmation to payments@sportssponsorship.com or +254 700 123 456\n\nWe will verify and confirm your sponsorship application.');">✅ Confirm Payment</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 4: ADMIN DASHBOARD                                      -->
+    <!-- ============================================================ -->
+    <div id="page4" class="page">
+        <div class="admin-dashboard">
+            <div class="header">
+                <div>
+                    <h1>⚙️ Admin Dashboard</h1>
+                    <p style="color:rgba(255,255,255,0.3); font-size:0.9rem;">Manage and review all sponsorship applications</p>
+                </div>
+                <div class="stats" id="adminStats">
+                    <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+                    <div class="stat-box"><div class="num" id="statPending">0</div><div class="lbl">Pending</div></div>
+                    <div class="stat-box"><div class="num" id="statApproved">0</div><div class="lbl">Approved</div></div>
+                </div>
+                <a href="#" class="back-link" onclick="goToPage('page1'); return false;" style="margin-bottom:0; font-size:0.8rem;">← Back</a>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Event</th>
+                            <th>Sport</th>
+                            <th>Amount (Ksh)</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <tr><td colspan="9" class="no-apps">No applications submitted yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top:12px; text-align:right; color:rgba(255,255,255,0.15); font-size:0.7rem;">
+                All applications are stored locally in your browser.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EVENT DETAIL MODAL ===== -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal-card">
+            <button class="close-modal" onclick="closeModal()">✕</button>
+            <h3 id="modalEventName">Event Name</h3>
+            <div class="modal-sub" id="modalEventOrganizer">Organizer</div>
+            <div class="modal-detail">
+                <div class="detail-row"><strong>📅 Date</strong><span id="modalEventDate">—</span></div>
+                <div class="detail-row"><strong>📍 Location</strong><span id="modalEventLocation">—</span></div>
+                <div class="detail-row"><strong>🏷️ Sport</strong><span id="modalEventSport">—</span></div>
+            </div>
+            <div class="modal-description"><h4>📝 About</h4><p id="modalEventDescription">Description</p></div>
+            <div class="modal-sponsorship"><h4>💰 Sponsorship</h4><p id="modalEventSponsorship">—</p></div>
+            <div class="modal-requirements"><h4>📋 Requirements</h4><ul id="modalRequirements"></ul></div>
+            <button class="btn-apply-modal" onclick="applyForEvent()">✔ Apply for Sponsorship →</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  PASSCODE FUNCTIONALITY
+        // ============================================================
+        const CORRECT_PASSCODE = "KECHI2006";
+
+        function showPasscodeModal() {
+            document.getElementById('passcodeOverlay').classList.add('active');
+            document.getElementById('passcodeInput').value = '';
+            document.getElementById('passcodeError').textContent = '';
+            setTimeout(() => document.getElementById('passcodeInput').focus(), 100);
+        }
+
+        function closePasscodeModal() {
+            document.getElementById('passcodeOverlay').classList.remove('active');
+        }
+
+        function verifyPasscode() {
+            const input = document.getElementById('passcodeInput').value.trim();
+            if (input === CORRECT_PASSCODE) {
+                closePasscodeModal();
+                goToPage('page4');
+            } else {
+                document.getElementById('passcodeError').textContent = '❌ Error: Cannot match the sponsor ID.';
+                document.getElementById('passcodeInput').value = '';
+                document.getElementById('passcodeInput').focus();
+            }
+        }
+
+        document.getElementById('passcodeInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') verifyPasscode();
+        });
+        document.getElementById('passcodeOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closePasscodeModal();
+        });
+
+        // ============================================================
+        //  DATA – ALL SPORTS AND 150+ EVENTS
+        // ============================================================
+        const sports = [
+            { id: 'running', name: 'Running', icon: '🏃' },
+            { id: 'football', name: 'Football', icon: '⚽' },
+            { id: 'basketball', name: 'Basketball', icon: '🏀' },
+            { id: 'volleyball', name: 'Volleyball', icon: '🏐' },
+            { id: 'swimming', name: 'Swimming', icon: '🏊' },
+            { id: 'tennis', name: 'Tennis', icon: '🎾' },
+            { id: 'cricket', name: 'Cricket', icon: '🏏' },
+            { id: 'athletics', name: 'Athletics', icon: '🥇' },
+            { id: 'cycling', name: 'Cycling', icon: '🚴' },
+            { id: 'rugby', name: 'Rugby', icon: '🏉' }
+        ];
+
+        function generateEvents(sportId, baseName, locations, organizers, count, startYear = 2026) {
+            const events = [];
+            const descs = [
+                'A premier event for athletes of all levels.',
+                'Challenging course with breathtaking views.',
+                'Join the best in the sport and compete for top prizes.',
+                'A competitive event that draws international talent.',
+                'Perfect for both amateurs and seasoned professionals.',
+                'Experience the thrill of competition in a beautiful setting.',
+                'A key event in the national calendar, not to be missed.',
+                'Great opportunity to showcase your skills and gain exposure.',
+                'Test your limits against a strong field of competitors.',
+                'A festival of sport with activities for the whole family.'
+            ];
+            const sponsorships = [
+                'Full support package including travel, accommodation, and gear.',
+                'Prize pool of Ksh 500,000 plus sponsorship deals.',
+                'Exclusive training camps and coaching from top professionals.',
+                'Substantial funding and media exposure for top performers.',
+                'Customized sponsorship plan based on your potential.',
+                'Access to world-class facilities and performance analysis.'
+            ];
+            const reqs = [
+                'Experience in the sport, age 16 or above.',
+                'Good physical fitness and competitive spirit.',
+                'Open to all, no prior experience required.',
+                'Advanced level required for elite category.',
+                'Team registration and group participation welcome.'
+            ];
+            for (let i = 0; i < count; i++) {
+                const year = startYear + Math.floor(i / 5);
+                const month = (i % 12) + 1;
+                const day = (i % 28) + 1;
+                const date = `${day} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][month-1]} ${year}`;
+                const name = `${baseName} ${i+1} - ${['Spring','Summer','Fall','Winter','Championship','Cup','Classic','Open','Tournament','Masters','Elite','Pro','International','Grand Prix','Invitational'][i%15]} Edition`;
+                const loc = locations[i % locations.length];
+                const org = organizers[i % organizers.length];
+                const desc = descs[i % descs.length];
+                const sponsorship = sponsorships[i % sponsorships.length];
+                const req = reqs[i % reqs.length];
+                events.push({
+                    name,
+                    date,
+                    location: loc,
+                    organizer: org,
+                    sport: sportId,
+                    desc,
+                    sponsorship,
+                    req
+                });
+            }
+            return events;
+        }
+
+        let allEvents = [];
+
+        // Running - 25 events (local & international)
+        const runningLocations = [
+            'Ngong Forest, Nairobi', 'Ngong Hills, Kajiado', 'Bomet', 'Strathmore Uni, Nairobi', 'Meru',
+            'Kaburu Dam', 'The Hub Karen, Nairobi', 'Nairobi', 'KALRO Grounds, Muguga', 'Elementaita',
+            'Uhuru Gardens, Nairobi', 'Maasai Mara', 'Kiambu', 'Karen, Nairobi', 'Nakuru',
+            'Boston, USA', 'London, UK', 'Berlin, Germany', 'Chicago, USA', 'New York, USA',
+            'Tokyo, Japan', 'Paris, France', 'Dubai, UAE', 'Seoul, Korea', 'Cape Town, SA',
+            'Valencia, Spain', 'Rotterdam, NL', 'Sydney, Australia', 'Toronto, Canada', 'Rome, Italy'
+        ];
+        const runningOrgs = ['Fit Savanna', 'Run Beyond', 'World Athletics', 'Asian Athletics', 'African Athletics', 'European Athletics', 'Oceania Athletics'];
+        allEvents = allEvents.concat(generateEvents('running', 'Run', runningLocations, runningOrgs, 25, 2026));
+
+        // Football - 20 events
+        const footballLocations = [
+            'Kasarani, Nairobi', 'Mombasa', 'Eldoret', 'Kisumu', 'Nyayo Stadium, Nairobi',
+            'Nakuru', 'Nairobi City', 'Mombasa Beach', 'Kisumu Stadium', 'Eldoret Sports Club',
+            'London, UK', 'Barcelona, Spain', 'Milan, Italy', 'Paris, France', 'Berlin, Germany',
+            'Dubai, UAE', 'Tokyo, Japan', 'New York, USA', 'Sao Paulo, Brazil', 'Cape Town, SA'
+        ];
+        const footballOrgs = ['FKF', 'Coastal FA', 'Rift Valley FA', 'Lake Region FA', 'Premier League', 'National FA', 'FIFA', 'UEFA', 'CAF'];
+        allEvents = allEvents.concat(generateEvents('football', 'Football Cup', footballLocations, footballOrgs, 20, 2026));
+
+        // Basketball - 15 events
+        const basketballLocations = [
+            'Kasarani Gym, Nairobi', 'Mombasa Sports Club', 'Eldoret', 'Nairobi', 'Kisumu',
+            'Nakuru', 'Nyayo Stadium', 'Los Angeles, USA', 'New York, USA', 'Chicago, USA',
+            'Barcelona, Spain', 'Athens, Greece', 'Tokyo, Japan', 'Sydney, Australia', 'Cape Town, SA'
+        ];
+        const basketballOrgs = ['KBF', 'Coastal Basketball', 'Rift Valley Ballers', 'National League', 'NBA', 'FIBA'];
+        allEvents = allEvents.concat(generateEvents('basketball', 'Basketball Open', basketballLocations, basketballOrgs, 15, 2026));
+
+        // Volleyball - 12 events
+        const volleyballLocations = [
+            'Kasarani, Nairobi', 'Kisumu', 'Nakuru', 'Mombasa', 'Eldoret',
+            'Nairobi', 'Paris, France', 'Rome, Italy', 'Tokyo, Japan', 'Rio de Janeiro, Brazil',
+            'Dubai, UAE', 'Los Angeles, USA'
+        ];
+        const volleyballOrgs = ['KVF', 'National Volleyball', 'Regional Champs', 'FIVB', 'CAVB'];
+        allEvents = allEvents.concat(generateEvents('volleyball', 'Volleyball Cup', volleyballLocations, volleyballOrgs, 12, 2026));
+
+        // Swimming - 12 events
+        const swimmingLocations = [
+            'Nairobi Aquatics', 'Mombasa Beach', 'Eldoret', 'Kisumu', 'Nakuru',
+            'Lake Victoria', 'Sydney, Australia', 'Tokyo, Japan', 'London, UK', 'Los Angeles, USA',
+            'Cape Town, SA', 'Dubai, UAE'
+        ];
+        const swimmingOrgs = ['KSA', 'National Swim', 'Coastal Swim', 'FINA', 'World Aquatics'];
+        allEvents = allEvents.concat(generateEvents('swimming', 'Swim Meet', swimmingLocations, swimmingOrgs, 12, 2026));
+
+        // Tennis - 12 events
+        const tennisLocations = [
+            'Nairobi Club', 'Mombasa', 'Nakuru', 'Eldoret', 'Kisumu',
+            'Karen, Nairobi', 'Wimbledon, UK', 'Paris, France', 'New York, USA', 'Melbourne, Australia',
+            'Dubai, UAE', 'Tokyo, Japan'
+        ];
+        const tennisOrgs = ['KTN', 'National Tennis', 'Regional Tour', 'ITF', 'ATP', 'WTA'];
+        allEvents = allEvents.concat(generateEvents('tennis', 'Tennis Open', tennisLocations, tennisOrgs, 12, 2026));
+
+        // Cricket - 10 events
+        const cricketLocations = [
+            'Nairobi Gymkhana', 'Mombasa', 'Eldoret', 'Kisumu', 'Nakuru',
+            'London, UK', 'Melbourne, Australia', 'Dubai, UAE', 'Cape Town, SA', 'Mumbai, India'
+        ];
+        const cricketOrgs = ['KCA', 'National Cricket', 'Regional League', 'ICC', 'Cricket Kenya'];
+        allEvents = allEvents.concat(generateEvents('cricket', 'Cricket Cup', cricketLocations, cricketOrgs, 10, 2026));
+
+        // Athletics - 18 events
+        const athleticsLocations = [
+            'Kasarani, Nairobi', 'Eldoret', 'Nairobi', 'Mombasa', 'Nakuru',
+            'Kisumu', 'Aberdare', 'Maasai Mara', 'London, UK', 'Paris, France',
+            'Berlin, Germany', 'Rome, Italy', 'Tokyo, Japan', 'Eugene, USA', 'Cape Town, SA',
+            'Sydney, Australia', 'Dubai, UAE', 'Doha, Qatar'
+        ];
+        const athleticsOrgs = ['AK', 'World Athletics', 'African Athletics', 'European Athletics', 'Asian Athletics'];
+        allEvents = allEvents.concat(generateEvents('athletics', 'Athletics Classic', athleticsLocations, athleticsOrgs, 18, 2026));
+
+        // Cycling - 12 events
+        const cyclingLocations = [
+            'Nairobi CBD', 'Nakuru', 'Mombasa', 'Eldoret', 'Naivasha',
+            'Nyeri', 'Paris, France', 'Rome, Italy', 'Cape Town, SA', 'Dubai, UAE',
+            'Tokyo, Japan', 'Melbourne, Australia'
+        ];
+        const cyclingOrgs = ['KCF', 'National Cycling', 'Rift Valley Tour', 'UCI', 'Tour de France'];
+        allEvents = allEvents.concat(generateEvents('cycling', 'Cycling Tour', cyclingLocations, cyclingOrgs, 12, 2026));
+
+        // Rugby - 12 events
+        const rugbyLocations = [
+            'RFUEA, Nairobi', 'Mombasa', 'Nakuru', 'Eldoret', 'Kisumu',
+            'Nairobi', 'London, UK', 'Paris, France', 'Cape Town, SA', 'Sydney, Australia',
+            'Dubai, UAE', 'Tokyo, Japan'
+        ];
+        const rugbyOrgs = ['KRU', 'National Rugby', 'Sevens Series', 'World Rugby', 'Rugby Africa'];
+        allEvents = allEvents.concat(generateEvents('rugby', 'Rugby Cup', rugbyLocations, rugbyOrgs, 12, 2026));
+
+        // Total events: 25+20+15+12+12+12+10+18+12+12 = 148+ events
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let selectedSport = null;
+        let selectedEvent = null;
+        let autoTimer = null;
+
+        // ============================================================
+        //  ADMIN FUNCTIONS
+        // ============================================================
+        function getApplications() {
+            try {
+                const data = localStorage.getItem('allApplications');
+                return data ? JSON.parse(data) : [];
+            } catch(e) { return []; }
+        }
+
+        function saveApplications(apps) {
+            localStorage.setItem('allApplications', JSON.stringify(apps));
+        }
+
+        function addApplication(appData) {
+            const apps = getApplications();
+            appData.id = Date.now();
+            appData.status = 'pending';
+            appData.submittedAt = new Date().toISOString();
+            apps.unshift(appData);
+            saveApplications(apps);
+        }
+
+        function deleteApplication(id) {
+            if (!confirm('Are you sure you want to delete this application?')) return;
+            const apps = getApplications();
+            const updated = apps.filter(a => a.id !== id);
+            saveApplications(updated);
+            renderAdminDashboard();
+        }
+
+        function approveApplication(id) {
+            const apps = getApplications();
+            const app = apps.find(a => a.id === id);
+            if (!app) return;
+
+            // Update status
+            const idx = apps.findIndex(a => a.id === id);
+            if (idx !== -1) {
+                apps[idx].status = 'approved';
+                saveApplications(apps);
+                renderAdminDashboard();
+            }
+
+            // Send email to applicant
+            sendApprovalEmail(app);
+        }
+
+        function sendApprovalEmail(app) {
+            const emailData = {
+                to_email: app.email,
+                to_name: app.fullName,
+                event_name: app.eventName,
+                sport: app.sport,
+                registration_fee: app.registrationFee,
+                submission_date: new Date(app.submittedAt).toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' })
+            };
+
+            fetch('/.netlify/functions/send-approval-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(emailData),
+            }).then(res => res.json()).then(data => {
+                if (data.success) {
+                    alert('✅ Application approved and email sent to the applicant!');
+                } else {
+                    alert('✅ Application approved but email could not be sent. Please check email configuration.');
+                }
+            }).catch(err => {
+                console.error('Error sending approval email:', err);
+                alert('✅ Application approved but email could not be sent. Please check your internet connection.');
+            });
+        }
+
+        function renderAdminDashboard() {
+            const apps = getApplications();
+            const tbody = document.getElementById('adminTableBody');
+            const total = apps.length;
+            const pending = apps.filter(a => a.status === 'pending').length;
+            const approved = apps.filter(a => a.status === 'approved').length;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statApproved').textContent = approved;
+
+            if (apps.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="no-apps">No applications submitted yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = apps.map((app, idx) => `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td style="font-size:0.75rem; color:rgba(255,255,255,0.4);">${new Date(app.submittedAt).toLocaleDateString('en-KE', {day:'2-digit',month:'short',year:'numeric'})}</td>
+                    <td><strong>${app.fullName || 'N/A'}</strong></td>
+                    <td style="font-size:0.8rem; color:rgba(255,255,255,0.6);">${app.email || 'N/A'}</td>
+                    <td style="font-size:0.8rem;">${app.eventName || 'N/A'}</td>
+                    <td style="font-size:0.8rem;">${app.sport || 'N/A'}</td>
+                    <td style="font-size:0.8rem; color:#FBBF24;">${Number(app.sponsorshipAmount || 0).toLocaleString()}</td>
+                    <td><span class="status ${app.status}">${app.status}</span></td>
+                    <td>
+                        <div class="action-group">
+                            <button class="view-btn" onclick="viewApplication(${app.id})">View</button>
+                            ${app.status === 'pending' ? `
+                                <button class="approve-btn" onclick="approveApplication(${app.id})">Approve</button>
+                            ` : ''}
+                            <button class="delete-btn" onclick="deleteApplication(${app.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewApplication(id) {
+            const apps = getApplications();
+            const app = apps.find(a => a.id === id);
+            if (!app) return alert('Application not found.');
+            const msg = `
+📋 APPLICATION DETAILS
+━━━━━━━━━━━━━━━━━━━━━
+👤 Name: ${app.fullName || 'N/A'}
+📧 Email: ${app.email || 'N/A'}
+📱 Phone: ${app.phone || 'N/A'}
+📅 DOB: ${app.dob || 'N/A'}
+🌍 Nationality: ${app.nationality || 'N/A'}
+📍 County: ${app.county || 'N/A'}
+🏷️ Gender: ${app.gender || 'N/A'}
+⭐ Experience: ${app.experience || 'N/A'}
+📞 Emergency: ${app.emergencyContact || 'N/A'}
+
+🏅 Event: ${app.eventName || 'N/A'}
+🏆 Sport: ${app.sport || 'N/A'}
+📅 Date: ${app.eventDate || 'N/A'}
+📍 Location: ${app.eventLocation || 'N/A'}
+
+💰 Desired Sponsorship: Ksh ${Number(app.sponsorshipAmount || 0).toLocaleString()}
+👥 Team Size: ${app.teamSize || 'N/A'}
+💳 Payment Method: ${app.paymentMethod || 'N/A'}
+
+📊 Status: ${app.status || 'pending'}
+📅 Submitted: ${new Date(app.submittedAt).toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' })}
+            `.trim();
+            alert(msg);
+        }
+
+        // ============================================================
+        //  AUTO-NAVIGATION TIMER
+        // ============================================================
+        function startAutoTimer() {
+            if (autoTimer) clearTimeout(autoTimer);
+            autoTimer = setTimeout(() => {
+                goToPage('page2');
+                buildSelectionDropdowns();
+            }, 10000);
+        }
+
+        function resetAutoTimer() {
+            if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+            if (document.getElementById('page1').classList.contains('active')) startAutoTimer();
+        }
+
+        // ============================================================
+        //  RENDER SPORTS
+        // ============================================================
+        function renderSports() {
+            const grid = document.getElementById('sportGrid');
+            grid.innerHTML = '';
+            sports.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'sport-card' + (selectedSport === s.id ? ' active-sport' : '');
+                const count = allEvents.filter(e => e.sport === s.id).length;
+                card.innerHTML = `
+                    <span class="sport-icon">${s.icon}</span>
+                    <div class="sport-name">${s.name}</div>
+                    <div class="sport-count">${count} events</div>
+                `;
+                card.addEventListener('click', () => {
+                    selectedSport = (selectedSport === s.id) ? null : s.id;
+                    renderSports();
+                    renderEvents();
+                    resetAutoTimer();
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        // ============================================================
+        //  RENDER EVENTS
+        // ============================================================
+        function renderEvents() {
+            const filtered = selectedSport ? allEvents.filter(e => e.sport === selectedSport) : allEvents;
+            const sportName = selectedSport ? sports.find(s => s.id === selectedSport)?.name || 'Selected' : 'All Sports';
+            document.getElementById('calendarTitle').textContent = selectedSport ? `${sportName} Events` : 'All Events';
+            document.getElementById('currentSportLabel').textContent = selectedSport ? sportName : 'Select a sport above 👆';
+
+            const grid = document.getElementById('calendarGrid');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="no-events">No events available for ${sportName}. Select another sport.</div>`;
+                return;
+            }
+            grid.innerHTML = '';
+            filtered.forEach(ev => {
+                const item = document.createElement('div');
+                item.className = 'calendar-item';
+                item.innerHTML = `
+                    <span class="cal-date">📅 ${ev.date}</span>
+                    <div class="cal-name">${ev.name}</div>
+                    <div class="cal-location">${ev.location}</div>
+                    <span class="cal-organizer">${ev.organizer}</span>
+                    <div class="cal-desc">${ev.desc || 'Description coming soon'}</div>
+                    <div class="click-hint">👆 Tap for details & apply</div>
+                `;
+                item.addEventListener('click', () => { openModal(ev); resetAutoTimer(); });
+                grid.appendChild(item);
+            });
+        }
+
+        // ============================================================
+        //  MODAL
+        // ============================================================
+        let modalEvent = null;
+
+        function openModal(ev) {
+            modalEvent = ev;
+            document.getElementById('modalEventName').textContent = ev.name;
+            document.getElementById('modalEventOrganizer').textContent = ev.organizer;
+            document.getElementById('modalEventDate').textContent = ev.date;
+            document.getElementById('modalEventLocation').textContent = ev.location;
+            const sportName = sports.find(s => s.id === ev.sport)?.name || ev.sport;
+            document.getElementById('modalEventSport').textContent = `${sportName}`;
+            document.getElementById('modalEventDescription').textContent = ev.desc || 'Experience this exciting event.';
+            document.getElementById('modalEventSponsorship').textContent = ev.sponsorship || 'Sponsorship details available upon application.';
+            const reqs = ev.req ? ev.req.split(',').map(r => r.trim()) : ['Good physical fitness', 'Age 16 or above'];
+            const ul = document.getElementById('modalRequirements');
+            ul.innerHTML = reqs.map(r => `<li>${r}</li>`).join('');
+            document.getElementById('eventModal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('eventModal').classList.remove('active'); }
+
+        function applyForEvent() {
+            if (!modalEvent) return;
+            selectedEvent = modalEvent;
+            closeModal();
+            goToPage('page2');
+            populateApplicationPage();
+        }
+
+        // ============================================================
+        //  PAGE NAVIGATION
+        // ============================================================
+        function goToPage(pageId) {
+            if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (pageId === 'page2') buildSelectionDropdowns();
+            if (pageId === 'page4') renderAdminDashboard();
+            if (pageId === 'page1') startAutoTimer();
+        }
+
+        // ============================================================
+        //  PAGE 2: SELECTION DROPDOWNS
+        // ============================================================
+        function buildSelectionDropdowns() {
+            const area = document.getElementById('selectionArea');
+            const wrapper = document.getElementById('eventDetailWrapper');
+            if (selectedEvent) {
+                wrapper.style.display = 'block';
+                area.innerHTML = '';
+                populateApplicationPage();
+                return;
+            }
+            wrapper.style.display = 'none';
+            area.innerHTML = `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:30px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:20px; padding:22px 28px; backdrop-filter:blur(8px);">
+                        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.3); margin-bottom:4px;">🏅 Select Your Sport</div>
+                        <select id="sportSelectPage2" style="width:100%; padding:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; color:#fff; font-size:1rem;">
+                            <option value="">-- Choose a sport --</option>
+                            ${sports.map(s => `<option value="${s.id}">${s.icon} ${s.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:20px; padding:22px 28px; backdrop-filter:blur(8px);">
+                        <div style="font-size:0.65rem; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.3); margin-bottom:4px;">📅 Select Your Event</div>
+                        <select id="eventSelectPage2" style="width:100%; padding:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; color:#fff; font-size:1rem;">
+                            <option value="">-- First choose a sport --</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:10px;">
+                    <button onclick="applySelectedFromDropdowns()" class="btn-submit" style="max-width:300px; padding:12px 30px; font-size:0.95rem;">Apply for this Event</button>
+                </div>
+            `;
+
+            const sportSelect = document.getElementById('sportSelectPage2');
+            const eventSelect = document.getElementById('eventSelectPage2');
+            sportSelect.addEventListener('change', function() {
+                const sportId = this.value;
+                eventSelect.innerHTML = '<option value="">-- Select an event --</option>';
+                if (sportId) {
+                    const events = allEvents.filter(e => e.sport === sportId);
+                    events.forEach(ev => {
+                        const opt = document.createElement('option');
+                        opt.value = JSON.stringify(ev);
+                        opt.textContent = `${ev.date} - ${ev.name}`;
+                        eventSelect.appendChild(opt);
+                    });
+                }
+            });
+        }
+
+        function applySelectedFromDropdowns() {
+            const eventSelect = document.getElementById('eventSelectPage2');
+            const selected = eventSelect.value;
+            if (!selected) { alert('Please select an event.'); return; }
+            try {
+                const ev = JSON.parse(selected);
+                selectedEvent = ev;
+                if (!selectedSport) { selectedSport = ev.sport; renderSports(); renderEvents(); }
+                buildSelectionDropdowns();
+                populateApplicationPage();
+            } catch(e) { alert('Invalid selection.'); }
+        }
+
+        // ============================================================
+        //  APPLICATION PAGE
+        // ============================================================
+        function populateApplicationPage() {
+            if (!selectedEvent) { buildSelectionDropdowns(); return; }
+            const ev = selectedEvent;
+            const sportName = sports.find(s => s.id === ev.sport)?.name || ev.sport;
+            document.getElementById('detailTitle').innerHTML = `${ev.name} <span style="color:#FBBF24;">Sponsorship</span>`;
+            document.getElementById('detailOrganizer').textContent = ev.organizer;
+            document.getElementById('detailDate').textContent = ev.date;
+            document.getElementById('detailLocation').textContent = ev.location;
+            document.getElementById('detailSport').textContent = `${sportName}`;
+            document.getElementById('detailDescription').textContent = ev.desc || 'Event description.';
+            const reqs = ev.req ? ev.req.split(',').map(r => r.trim()) : ['Good physical fitness', 'Age 16 or above'];
+            const ul = document.getElementById('detailRequirements');
+            ul.innerHTML = reqs.map(r => `<li style="padding:4px 0; padding-left:22px; position:relative; font-size:0.85rem; color:rgba(255,255,255,0.7);"><span style="position:absolute; left:0; color:#FBBF24;">▹</span>${r}</li>`).join('');
+            document.getElementById('detailSponsorship').textContent = ev.sponsorship || 'Sponsorship details available upon application.';
+            document.getElementById('eventDetailWrapper').style.display = 'block';
+            document.getElementById('selectionArea').innerHTML = '';
+        }
+
+        // ============================================================
+        //  FEE CALCULATION
+        // ============================================================
+        function getFeeData(sport, teamSize) {
+            const TEAM_SPORTS = ['football', 'basketball', 'volleyball', 'rugby', 'cricket'];
+            const ATHLETICS_SPORTS = ['athletics', 'running'];
+            if (ATHLETICS_SPORTS.includes(sport)) {
+                return { perPerson: 1500, type: 'Individual (Athletics)', note: 'Ksh 1,500 per person' };
+            }
+            if (TEAM_SPORTS.includes(sport)) {
+                const size = parseInt(teamSize) || 1;
+                return { perPerson: 1000, total: 1000 * size, type: 'Team Sport', note: `Ksh 1,000 per head x ${size} = Ksh ${(1000 * size).toLocaleString()}` };
+            }
+            return { perPerson: 1500, type: 'Individual', note: 'Ksh 1,500 per person' };
+        }
+
+        // ============================================================
+        //  FILE UPLOAD LABEL
+        // ============================================================
+        document.getElementById('passportPhoto').addEventListener('change', function(e) {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('passportFileName').textContent = fileName;
+        });
+
+        // ============================================================
+        //  PAYMENT OPTION SELECTION
+        // ============================================================
+        document.querySelectorAll('#paymentOptionsPage3 .payment-option-page3').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio.disabled) return;
+                document.querySelectorAll('#paymentOptionsPage3 .payment-option-page3').forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+                radio.checked = true;
+            });
+        });
+
+        // ============================================================
+        //  SUBMIT APPLICATION
+        // ============================================================
+        function submitApplication(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const dob = document.getElementById('dob').value;
+            const nationality = document.getElementById('nationality').value.trim();
+            const county = document.getElementById('county').value.trim();
+            const gender = document.getElementById('gender').value;
+            const experience = document.getElementById('experience').value;
+            const emergencyContact = document.getElementById('emergencyContact').value.trim();
+            const sponsorshipAmount = document.getElementById('sponsorshipAmount').value;
+            const teamSize = document.getElementById('teamSize').value || 1;
+            const passportFile = document.getElementById('passportPhoto').files[0];
+
+            if (!fullName || !email || !phone || !dob || !nationality || !county || !experience || !emergencyContact || !sponsorshipAmount) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            if (!passportFile) {
+                alert('Please upload your passport photo.');
+                return;
+            }
+
+            const sport = selectedEvent ? selectedEvent.sport : 'running';
+            const feeData = getFeeData(sport, parseInt(teamSize) || 1);
+            const totalFee = feeData.total || feeData.perPerson;
+            const paymentRadio = document.querySelector('input[name="paymentMethodPage3"]:checked');
+            const paymentMethod = paymentRadio ? paymentRadio.value : 'Safaricom M-PESA';
+
+            const applicationData = {
+                fullName, email, phone, dob, nationality, county, gender, experience,
+                emergencyContact, sponsorshipAmount, teamSize,
+                registrationFee: totalFee, feeType: feeData.type,
+                eventName: selectedEvent ? selectedEvent.name : 'N/A',
+                sport: sport,
+                eventDate: selectedEvent ? selectedEvent.date : 'N/A',
+                eventLocation: selectedEvent ? selectedEvent.location : 'N/A',
+                passportPhoto: passportFile.name,
+                paymentMethod: paymentMethod,
+            };
+
+            addApplication(applicationData);
+            localStorage.setItem('applicationData', JSON.stringify(applicationData));
+            localStorage.setItem('selectedEvent', JSON.stringify(selectedEvent));
+
+            fetch('/.netlify/functions/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(applicationData),
+            }).then(res => res.json()).then(data => {
+                if (data.success) console.log('Emails sent successfully.');
+            }).catch(err => console.error('Error sending emails:', err));
+
+            goToPage('page3');
+            populateConfirmationPage();
+        }
+
+        // ============================================================
+        //  CONFIRMATION PAGE
+        // ============================================================
+        function populateConfirmationPage() {
+            const data = JSON.parse(localStorage.getItem('applicationData'));
+            if (!data) return;
+
+            const totalFee = data.registrationFee;
+            document.getElementById('confirmFee').textContent = `Ksh ${totalFee.toLocaleString()}`;
+            document.getElementById('confirmSportType').textContent = data.feeType || 'Individual';
+            document.getElementById('confirmBreakdown').textContent = `Ksh ${totalFee.toLocaleString()}`;
+            document.getElementById('mpesaAmount').textContent = totalFee.toLocaleString();
+            document.getElementById('airtelAmount').textContent = totalFee.toLocaleString();
+
+            const summaryDiv = document.getElementById('confirmSummary');
+            const fields = [
+                { label: 'Event', value: data.eventName, full: true },
+                { label: 'Sport', value: data.sport },
+                { label: 'Event Date', value: data.eventDate },
+                { label: 'Location', value: data.eventLocation },
+                { label: 'Full Name', value: data.fullName },
+                { label: 'Email', value: data.email },
+                { label: 'Phone', value: data.phone },
+                { label: 'Date of Birth', value: data.dob },
+                { label: 'Nationality', value: data.nationality },
+                { label: 'County', value: data.county },
+                { label: 'Gender', value: data.gender || 'Not specified' },
+                { label: 'Experience Level', value: data.experience },
+                { label: 'Emergency Contact', value: data.emergencyContact, full: true },
+                { label: 'Desired Sponsorship', value: `Ksh ${Number(data.sponsorshipAmount).toLocaleString()}`, full: true },
+                { label: 'Team Size', value: data.teamSize || 'N/A' },
+                { label: 'Registration Fee', value: `Ksh ${Number(data.registrationFee).toLocaleString()}`, full: true },
+                { label: 'Payment Method', value: data.paymentMethod || 'Not selected' },
+            ];
+            summaryDiv.innerHTML = '';
+            fields.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'summary-item-page3' + (f.full ? ' full' : '');
+                div.innerHTML = `<span class="label">${f.label}</span><span class="value">${f.value}</span>`;
+                summaryDiv.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderSports();
+        renderEvents();
+
+        if (document.getElementById('page1').classList.contains('active')) startAutoTimer();
+
+        const storedEvent = localStorage.getItem('selectedEvent');
+        if (storedEvent) {
+            try {
+                selectedEvent = JSON.parse(storedEvent);
+                selectedSport = selectedEvent.sport;
+                renderSports();
+                renderEvents();
+            } catch(e) {}
+        }
+
+        const appData = localStorage.getItem('applicationData');
+        if (appData && document.getElementById('page3').classList.contains('active')) populateConfirmationPage();
+
+        if (document.getElementById('page2').classList.contains('active')) {
+            buildSelectionDropdowns();
+            if (selectedEvent) populateApplicationPage();
+        }
+
+        console.log('🏆 Sports Sponsorship Platform 2026 — 150+ events, admin with delete & approve+email.');
+    </script>
+</body>
+</html>
